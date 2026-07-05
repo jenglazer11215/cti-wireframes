@@ -2,16 +2,13 @@
 
 const RENDERERS = {
   "home": renderHome,
-  "about": renderAbout,
   "forum-public": renderForumPublic,
   "summit": renderSummit,
   "lab": renderLab,
   "lab-report": renderLabReport,
   "consequential-archive": renderConsequentialArchive,
   "blog-post": renderBlogPost,
-  "work-with-us": renderWorkWithUs,
-  "advisory-public": renderAdvisoryPublic,
-  "join-us": renderJoinUs,
+  "engage": renderEngage,
   "sponsor-prospectus": renderSponsorProspectus,
   "request-form": renderRequestForm,
   "thank-you": renderThankYou,

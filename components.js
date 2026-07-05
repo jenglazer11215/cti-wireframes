@@ -8,14 +8,11 @@ const S = {
   page: "home",
   selectedEventId: null, // set in app.js after FORUM_EVENTS loads
   selectedReportTitle: null, // set in app.js after LAB_REPORTS loads
-  about: { tab: "team" },
   forumPublic: { filter: "All" },
   lab: { series: "All", tag: "All" },
   consequentialArchive: { type: "All", topic: "All" },
-  joinUs: { openFaq: null },
-  advisoryPublic: { openForm: null },
+  engage: { tab: "advisory", openFaq: null, openForm: null, selectedNeeds: [] },
   advisoryMember: { openForm: null },
-  workWithUs: { selectedNeeds: [] },
   playbooks: { theme: "All" },
   forumCalendar: { view: "list", access: "All", theme: "All" },
   pastEventDetail: { tab: "synthesis" },
@@ -36,6 +33,11 @@ function nav(page) {
   S.page = page;
   render();
   window.scrollTo(0, 0);
+}
+
+function navEngage(tab) {
+  S.engage.tab = tab;
+  nav("engage");
 }
 
 function navToEvent(eventId, target) {
@@ -73,8 +75,8 @@ function toggleState(path) {
   render();
 }
 
-function toggleWorkWithUsNeed(opt) {
-  const arr = S.workWithUs.selectedNeeds;
+function toggleEngageNeed(opt) {
+  const arr = S.engage.selectedNeeds;
   const i = arr.indexOf(opt);
   if (i === -1) arr.push(opt); else arr.splice(i, 1);
   render();
@@ -120,16 +122,23 @@ function Card(inner, { onclick = "", className = "" } = {}) {
   return `<div ${onclick ? `onclick="${onclick}"` : ""} class="border border-gray-300 p-4 bg-white ${onclick ? "cursor-pointer hover:bg-gray-50" : ""} ${className}">${inner}</div>`;
 }
 
-// items: [[label, page], ...]
+// items: [[label, page], ...]. A page value of "engage:<tab>" routes to the
+// Engage page with that tab active instead of navigating to a distinct page.
 function SectionNav(section, items, active) {
   return `<div class="bg-gray-50 border-b border-gray-200">
     <div class="max-w-6xl mx-auto px-6 flex items-center gap-0">
       <span class="text-xs font-mono uppercase tracking-widest text-gray-400 pr-6 border-r border-gray-300 py-2.5 flex-shrink-0">${esc(section)}</span>
       <div class="flex items-center ml-2">
-        ${items.map(([label, page]) => `
-          <button onclick="nav('${page}')" class="text-xs font-mono px-4 py-2.5 border-b-2 -mb-px transition-colors ${active === page ? "border-gray-900 text-gray-900 font-medium" : "border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-400"}">
+        ${items.map(([label, page]) => {
+          const isEngageTab = page.startsWith("engage:");
+          const tab = isEngageTab ? page.slice("engage:".length) : null;
+          const onclick = isEngageTab ? `navEngage('${tab}')` : `nav('${page}')`;
+          const isActive = isEngageTab ? (active === "engage" && S.engage.tab === tab) : active === page;
+          return `
+          <button onclick="${onclick}" class="text-xs font-mono px-4 py-2.5 border-b-2 -mb-px transition-colors ${isActive ? "border-gray-900 text-gray-900 font-medium" : "border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-400"}">
             ${esc(label)}
-          </button>`).join("")}
+          </button>`;
+        }).join("")}
       </div>
     </div>
   </div>`;
@@ -172,10 +181,10 @@ function FooterCTA() {
 
 function PublicNav(page) {
   const items = [
-    ["Home", "home"], ["About", "about"], ["The Forum", "forum-public"],
+    ["Home", "home"], ["The Forum", "forum-public"],
     ["Coqual Global Lab", "lab"], ["Consequential", "consequential-archive"],
     ["Luminary Exchange", "luminary-exchange"],
-    ["Work With Us", "work-with-us"], ["Join Us", "join-us"], ["Sponsor Prospectus", "sponsor-prospectus"],
+    ["Engage", "engage"], ["Sponsor Prospectus", "sponsor-prospectus"],
   ];
   return `<nav class="border-b border-gray-300 bg-white sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-6 py-3 flex items-center gap-6">

@@ -113,28 +113,29 @@ function renderHome() {
   </div>`;
 }
 
-function renderAbout() {
-  const tab = S.about.tab;
-  const list = tab === "team" ? TEAM_AND_FELLOWS : BOARD;
+function renderEngageAbout() {
   return `<div class="max-w-6xl mx-auto px-6 py-12">
     <h1 class="text-4xl font-semibold text-gray-900 mb-4 max-w-3xl leading-tight">Who We Are</h1>
     <p class="text-lg text-gray-600 max-w-2xl mb-3 leading-relaxed">
       Coqual helps organizations navigate complexity, strengthen leadership, build trust, and design better work futures.
     </p>
-
-    <div class="flex border-b border-gray-300 mb-10 mt-8">
-      ${["team", "board"].map(t => `
-        <button onclick="setState('about.tab', '${t}')" class="text-xs font-mono uppercase tracking-wide px-5 py-2.5 border-b-2 -mb-px ${tab === t ? "border-gray-900 text-gray-900" : "border-transparent text-gray-500 hover:text-gray-700"}">
-          ${t === "team" ? "Team &amp; Fellows" : "Board of Directors"}
-        </button>`).join("")}
-    </div>
-
-    <p class="text-sm text-gray-600 mb-8">
+    <p class="text-sm text-gray-600 mb-10">
       Coqual is a global think tank that helps companies redesign how they work and lead.
     </p>
 
+    <h2 class="font-semibold text-gray-900 mb-6 text-xl">Team &amp; Fellows</h2>
+    <div class="grid grid-cols-4 gap-6 mb-16">
+      ${TEAM_AND_FELLOWS.map(({ name, title }) => `
+        <div class="flex flex-col items-center text-center">
+          ${GrayBox({ w: "w-full", h: "h-36", label: "Photo" })}
+          <p class="font-medium text-gray-900 text-sm mt-3">${esc(name)}</p>
+          <p class="text-xs text-gray-500 mt-1 leading-snug whitespace-pre-line">${esc(title)}</p>
+        </div>`).join("")}
+    </div>
+
+    <h2 class="font-semibold text-gray-900 mb-6 text-xl">Board of Directors</h2>
     <div class="grid grid-cols-4 gap-6">
-      ${list.map(({ name, title }) => `
+      ${BOARD.map(({ name, title }) => `
         <div class="flex flex-col items-center text-center">
           ${GrayBox({ w: "w-full", h: "h-36", label: "Photo" })}
           <p class="font-medium text-gray-900 text-sm mt-3">${esc(name)}</p>
@@ -153,7 +154,7 @@ function renderForumPublic() {
     : upcoming;
 
   return `<div>
-    ${SectionNav("The Forum", [["Overview", "forum-public"], ["Events", "forum-calendar"], ["Summit", "summit"], ["Join the Coalition", "join-us"]], "forum-public")}
+    ${SectionNav("The Forum", [["Overview", "forum-public"], ["Events", "forum-calendar"], ["Summit", "summit"], ["Join the Coalition", "engage:taskforce"]], "forum-public")}
     <div class="max-w-6xl mx-auto px-6 py-12">
       ${Lbl("THE COALITION IS CURRENTLY WORKING ON")}
       <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-4 max-w-2xl leading-tight">
@@ -245,7 +246,7 @@ function renderForumPublic() {
 
 function renderSummit() {
   return `<div>
-    ${SectionNav("The Forum", [["Overview", "forum-public"], ["Events", "forum-calendar"], ["Summit", "summit"], ["Join the Coalition", "join-us"]], "summit")}
+    ${SectionNav("The Forum", [["Overview", "forum-public"], ["Events", "forum-calendar"], ["Summit", "summit"], ["Join the Coalition", "engage:taskforce"]], "summit")}
     <div class="max-w-6xl mx-auto px-6 py-12">
       ${Lbl("The Forum · Annual Summit")}
       <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-2">Work Reimagined: The Summit for Organizational Leaders</h1>
@@ -290,7 +291,7 @@ function renderLabReport() {
   const seriesReports = report.series ? LAB_REPORTS.filter(r => r.series === report.series && r.title !== report.title) : [];
 
   return `<div>
-    ${SectionNav("Coqual Global Lab", [["Research", "lab"], ["Press & Speakers", "advisory-public"], ["About the Lab", "about"]], "lab")}
+    ${SectionNav("Coqual Global Lab", [["Research", "lab"], ["Press & Speakers", "engage:advisory"], ["About the Lab", "engage:about"]], "lab")}
     <div class="max-w-6xl mx-auto px-6 py-10">
       <button onclick="nav('lab')" class="text-xs font-mono text-gray-500 hover:text-gray-900 mb-6 flex items-center gap-1">← All Research</button>
 
@@ -372,13 +373,13 @@ function renderLabReport() {
           <div class="border border-gray-300 p-4">
             <h3 class="font-semibold text-gray-900 mb-2 text-sm">Press & Permissions</h3>
             <p class="text-xs text-gray-600 leading-relaxed mb-3">For media inquiries, quote permissions, or speaker requests related to this research, contact the Coqual Global Lab.</p>
-            ${Btn("Contact the Lab", { onclick: "nav('advisory-public')" })}
+            ${Btn("Contact the Lab", { onclick: "navEngage('advisory')" })}
           </div>
 
           <div class="bg-gray-900 text-white p-4">
             <p class="text-sm font-medium mb-2">Bring this research to your organization.</p>
             <p class="text-xs text-gray-400 mb-3">Available for executive briefings, board presentations, leadership retreats, and company-wide sessions.</p>
-            <button onclick="nav('advisory-public')" class="text-xs font-mono border border-gray-600 text-gray-300 px-3 py-2 hover:border-white hover:text-white w-full">Book a Speaker</button>
+            <button onclick="navEngage('advisory')" class="text-xs font-mono border border-gray-600 text-gray-300 px-3 py-2 hover:border-white hover:text-white w-full">Book a Speaker</button>
           </div>
 
           ${seriesReports.length > 0 ? `
@@ -409,12 +410,12 @@ function renderLab() {
   const featured = LAB_REPORTS[0];
 
   return `<div>
-    ${SectionNav("Coqual Global Lab", [["Research", "lab"], ["Press & Speakers", "advisory-public"], ["About the Lab", "about"]], "lab")}
+    ${SectionNav("Coqual Global Lab", [["Research", "lab"], ["Press & Speakers", "engage:advisory"], ["About the Lab", "engage:about"]], "lab")}
     <div class="max-w-6xl mx-auto px-6 py-12">
       ${Lbl("Coqual Global Lab")}
       <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-3">Research at the frontier of work, talent, and leadership.</h1>
       <p class="text-gray-600 text-sm mb-2">
-        Full reports available to CTI members. <button onclick="nav('advisory-public')" class="underline text-gray-800">Citing our research or requesting a speaker? Contact the Lab.</button>
+        Full reports available to CTI members. <button onclick="navEngage('advisory')" class="underline text-gray-800">Citing our research or requesting a speaker? Contact the Lab.</button>
       </p>
       <p class="text-xs text-gray-500 mb-8 font-mono">
         ${publicReports.length} reports available · Full research library available to CTI members.
@@ -609,8 +610,24 @@ function renderBlogPost() {
   </div>`;
 }
 
-function renderWorkWithUs() {
-  const selectedNeeds = S.workWithUs.selectedNeeds;
+function renderEngage() {
+  const tab = S.engage.tab;
+  const items = [
+    ["Advisory", "engage:advisory"], ["Speaking", "engage:speaking"],
+    ["Task Force", "engage:taskforce"], ["About", "engage:about"],
+  ];
+  const content = tab === "speaking" ? renderEngageSpeaking()
+    : tab === "taskforce" ? renderEngageTaskForce()
+    : tab === "about" ? renderEngageAbout()
+    : renderEngageAdvisory();
+  return `<div>
+    ${SectionNav("Engage", items, "engage")}
+    ${content}
+  </div>`;
+}
+
+function renderEngageSpeaking() {
+  const selectedNeeds = S.engage.selectedNeeds;
 
   const offers = [
     { id: "book-a-speaker", title: "Book a Speaker", desc: "CTI leaders, researchers, and Luminary Exchange speakers for keynotes, panels, fireside chats, employee forums, ERG/BRG events, and leadership meetings.", bestFor: "Company-wide events, leadership offsites, inclusion summits, heritage month programs, future-of-work events, and employee community moments.", cta: "Book a Speaker", need: "Speaker or keynote" },
@@ -639,7 +656,7 @@ function renderWorkWithUs() {
   return `<div>
     <section class="border-b border-gray-300 bg-white px-6 py-16">
       <div class="max-w-6xl mx-auto">
-        ${Lbl("Work With Us")}
+        ${Lbl("Speaking")}
         <h1 class="text-5xl font-semibold text-gray-900 mt-4 mb-4 leading-tight max-w-3xl">
           Bring CTI into your next leadership, workforce, or employee community moment.
         </h1>
@@ -648,7 +665,7 @@ function renderWorkWithUs() {
         </p>
         <div class="flex gap-3 flex-wrap mb-6">
           <button onclick="scrollToFormId('wwu-form')" class="bg-gray-900 text-white text-xs font-mono px-5 py-2.5 hover:bg-gray-700">Request CTI Support</button>
-          <button onclick="setState('workWithUs.selectedNeeds', ['Speaker or keynote']); scrollToFormId('wwu-form')" class="border border-gray-800 text-gray-800 text-xs font-mono px-5 py-2.5 hover:bg-gray-100">Book a Speaker</button>
+          <button onclick="setState('engage.selectedNeeds', ['Speaker or keynote']); scrollToFormId('wwu-form')" class="border border-gray-800 text-gray-800 text-xs font-mono px-5 py-2.5 hover:bg-gray-100">Book a Speaker</button>
         </div>
         <p class="text-xs text-gray-500 italic">
           Not sure what you need? Tell us the audience, topic, and outcome. We will recommend the right CTI speaker, Luminary, briefing, or working session.
@@ -683,7 +700,7 @@ function renderWorkWithUs() {
                 <p class="text-xs font-mono text-gray-400 mb-1 uppercase tracking-wide">Best for</p>
                 <p class="text-xs text-gray-600 leading-relaxed">${esc(offer.bestFor)}</p>
               </div>
-              <button onclick="setState('workWithUs.selectedNeeds', ['${esc(offer.need).replace(/'/g, "\\'")}']); scrollToFormId('wwu-form')" class="text-xs font-mono border border-gray-800 text-gray-800 px-4 py-1.5 hover:bg-gray-100">
+              <button onclick="setState('engage.selectedNeeds', ['${esc(offer.need).replace(/'/g, "\\'")}']); scrollToFormId('wwu-form')" class="text-xs font-mono border border-gray-800 text-gray-800 px-4 py-1.5 hover:bg-gray-100">
                 ${esc(offer.cta)}
               </button>
             </div>`).join("")}
@@ -734,10 +751,10 @@ function renderWorkWithUs() {
               <div class="grid grid-cols-3 gap-2">
                 ${needOptions.map(opt => `
                   <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                    <div class="w-4 h-4 border flex-shrink-0 flex items-center justify-center ${selectedNeeds.includes(opt) ? "border-gray-900 bg-gray-900" : "border-gray-400"}" onclick="toggleWorkWithUsNeed('${esc(opt).replace(/'/g, "\\'")}')">
+                    <div class="w-4 h-4 border flex-shrink-0 flex items-center justify-center ${selectedNeeds.includes(opt) ? "border-gray-900 bg-gray-900" : "border-gray-400"}" onclick="toggleEngageNeed('${esc(opt).replace(/'/g, "\\'")}')">
                       ${selectedNeeds.includes(opt) ? `<span class="text-white text-xs">✓</span>` : ""}
                     </div>
-                    <span onclick="toggleWorkWithUsNeed('${esc(opt).replace(/'/g, "\\'")}')">${esc(opt)}</span>
+                    <span onclick="toggleEngageNeed('${esc(opt).replace(/'/g, "\\'")}')">${esc(opt)}</span>
                   </label>`).join("")}
               </div>
             </div>
@@ -813,17 +830,16 @@ function renderWorkWithUs() {
   </div>`;
 }
 
-function renderAdvisoryPublic() {
-  const openForm = S.advisoryPublic.openForm;
+function renderEngageAdvisory() {
+  const openForm = S.engage.openForm;
   const cards = [
     { id: "press", title: "Press", sub: "For journalists and media.", items: ["Rapid response comment", "Expert spokespeople", "Embargoed research access", "Press kit download", "Quote clearance"], cta: "Contact the Press Team" },
-    { id: "speaker", title: "Speaker Booking", sub: "For organizations booking CTI experts or Luminaries.", items: ["Keynotes", "Executive briefings", "Board presentations", "Leadership retreats", "Company-wide Forum sessions"], cta: "Book a Speaker" },
     { id: "advisory", title: "Decision Support / Advisory", sub: "For organizations or Co-Chairs needing thought partnership on a live challenge.", items: ["Issue framing", "Expert consultation", "Research synthesis", "Strategic guidance"], cta: "Request Decision Support" },
   ];
   return `<div class="max-w-6xl mx-auto px-6 py-12">
     ${Lbl("Advisory")}
     <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-8">How we can help your organization.</h1>
-    <div class="grid grid-cols-3 gap-6">
+    <div class="grid grid-cols-2 gap-6 max-w-3xl">
       ${cards.map(({ id, title, sub, items, cta }) => `
         <div>
           ${Card(`
@@ -835,7 +851,7 @@ function renderAdvisoryPublic() {
                   <div class="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></div>${esc(item)}
                 </li>`).join("")}
             </ul>
-            <button onclick="setState('advisoryPublic.openForm', ${JSON.stringify(openForm === id ? null : id)})" class="bg-gray-900 text-white px-4 py-1.5 text-xs font-mono hover:bg-gray-700 cursor-pointer inline-block">${esc(cta)}</button>
+            <button onclick="setState('engage.openForm', ${JSON.stringify(openForm === id ? null : id)})" class="bg-gray-900 text-white px-4 py-1.5 text-xs font-mono hover:bg-gray-700 cursor-pointer inline-block">${esc(cta)}</button>
           `)}
           ${openForm === id ? `
             <div class="border border-gray-300 border-t-0 bg-gray-50 p-4 space-y-3">
@@ -848,8 +864,8 @@ function renderAdvisoryPublic() {
   </div>`;
 }
 
-function renderJoinUs() {
-  const openFaq = S.joinUs.openFaq;
+function renderEngageTaskForce() {
+  const openFaq = S.engage.openFaq;
   const faqs = [
     { q: "How do I join?", a: "We begin with a conversation. There is no application form or self-service signup. Membership is extended after a conversation with a member of the CTI team." },
     { q: "What does membership include?", a: "Forum access (all sessions + recordings), Coqual Global Lab research, Consequential full archive, Luminary Exchange, Playbooks and assessments, Advisory support, and CTILearning access." },
@@ -857,7 +873,7 @@ function renderJoinUs() {
     { q: "Why isn't pricing on the website?", a: "Membership is a relationship. We have a conversation first." },
   ];
   return `<div class="max-w-6xl mx-auto px-6 py-12">
-    ${Lbl("Membership")}
+    ${Lbl("Task Force")}
     <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-4">Join the Coalition of Consequence</h1>
     <p class="text-base text-gray-600 mb-8 max-w-2xl leading-relaxed">A selective network of global leaders redesigning work, talent, and leadership. Membership means a seat in The Forum, predictive intelligence from the Coqual Global Lab, access to the Luminary Exchange, and a peer network you cannot find anywhere else.</p>
     ${Btn("Request a Membership Conversation", { onclick: "nav('request-form')", v: "solid" })}
@@ -878,7 +894,7 @@ function renderJoinUs() {
       <h2 class="font-semibold text-gray-900 mb-4">Frequently Asked Questions</h2>
       ${faqs.map(({ q, a }, i) => `
         <div class="border-b border-gray-200">
-          <button onclick="setState('joinUs.openFaq', ${openFaq === i ? "null" : i})" class="flex items-center justify-between w-full py-4 text-left">
+          <button onclick="setState('engage.openFaq', ${openFaq === i ? "null" : i})" class="flex items-center justify-between w-full py-4 text-left">
             <span class="text-sm font-medium text-gray-900">${esc(q)}</span>
             <span class="text-gray-400 text-lg ml-4">${openFaq === i ? "−" : "+"}</span>
           </button>
@@ -1075,7 +1091,7 @@ function renderSponsorProspectus() {
         Coqual is a global think tank with more than two decades of experience helping organizations navigate change and create conditions where people and ideas thrive. Our work blends rigorous research with cultural insight and practical tools that help leaders turn knowledge into action. The Global Lab at Coqual is our applied innovation center — designed to test, refine, and share what works in real time, supporting organizations as they design for the future of work.
       </p>
       <div class="mt-6 flex items-center gap-6">
-        <button onclick="nav('advisory-public')" class="text-xs font-mono text-gray-600 underline hover:text-gray-900">Contact the Lab</button>
+        <button onclick="navEngage('advisory')" class="text-xs font-mono text-gray-600 underline hover:text-gray-900">Contact the Lab</button>
         <button onclick="nav('lab')" class="text-xs font-mono text-gray-600 underline hover:text-gray-900">View All Research</button>
         <button onclick="nav('request-form')" class="text-xs font-mono text-gray-600 underline hover:text-gray-900">Request a Conversation</button>
       </div>
