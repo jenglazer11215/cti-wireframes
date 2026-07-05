@@ -347,107 +347,141 @@ const SUMMIT_SPONSOR_KEYNOTES = [
   { name: "Lee Elliot Major, OBE FAcSS", role: "Professor of Social Mobility, University of Exeter" },
 ];
 
+function SummitHero() {
+  return `
+    ${Lbl("The Forum · Annual Summit")}
+    <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-2">Coqual Summit 2026</h1>
+    <div class="flex items-center gap-2 mb-4 flex-wrap">
+      <span class="text-xs font-mono bg-gray-900 text-white px-2 py-0.5">2026 THEME: CONSEQUENTIAL</span>
+    </div>
+    <p class="text-gray-500 text-sm mb-6">Friday, December 4, 2026 · Cornell Tech · New York City + Virtual</p>
+    <div class="inline-block border border-gray-400 bg-gray-100 px-4 py-2 mb-8">
+      ${Lbl("Members-only event · Invitation required")}
+    </div>
+    <p class="text-base text-gray-700 max-w-3xl leading-relaxed mb-8">
+      A senior leadership gathering on the people questions shaping business performance. For one day in New York City and virtually, Coqual brings together senior leaders, member companies, researchers, operators, cultural thinkers, and luminaries to work through the workforce questions companies are facing now.
+    </p>
+    ${GrayBox({ h: "h-64", label: "Summit venue image" })}`;
+}
+
+function SummitKeynotes() {
+  return `
+    <h2 class="font-semibold text-gray-900 mb-2 mt-10">Keynotes</h2>
+    <p class="text-sm text-gray-500 mb-6">This year's headline voices.</p>
+    <div class="grid grid-cols-4 gap-4">
+      ${SUMMIT_SPONSOR_KEYNOTES.map(k => `
+        <div class="border border-gray-300 p-4 text-center">
+          ${GrayBox({ h: "h-20", label: "Photo" })}
+          <p class="font-medium text-gray-900 mt-3 text-sm">${esc(k.name)}</p>
+          <p class="text-xs text-gray-500 mt-1 leading-snug">${esc(k.role)}</p>
+        </div>`).join("")}
+    </div>`;
+}
+
+function SummitLuminaries() {
+  return `
+    <h2 class="font-semibold text-gray-900 mb-2 mt-10">With the Luminaries of the Global Lab</h2>
+    <p class="text-sm text-gray-500 mb-6">${LUMINARIES.length} Luminaries and member leaders shaping the day's agenda.</p>
+    <div class="grid grid-cols-4 gap-4">
+      ${LUMINARIES.map(l => `
+        <div class="border border-gray-300 p-4 text-center">
+          ${GrayBox({ h: "h-20", label: "Photo" })}
+          <p class="font-medium text-gray-900 mt-3 text-sm">${esc(l.name)}</p>
+          <p class="text-xs text-gray-500 mt-1 leading-snug">${esc(l.title)}</p>
+        </div>`).join("")}
+    </div>`;
+}
+
+function SummitAgenda() {
+  return `
+    <h2 class="font-semibold text-gray-900 mb-6">Agenda</h2>
+    <div class="space-y-2 mb-10">
+      ${SUMMIT_2026_AGENDA.map(({ time, title, speakers }) => `
+        <div class="border border-gray-200 p-4 grid grid-cols-4 gap-4">
+          <div class="text-xs font-mono text-gray-500">${esc(time)}</div>
+          <div class="col-span-3">
+            <p class="font-medium text-gray-900 text-sm mb-1">${esc(title)}</p>
+            ${speakers.length > 0 ? `
+              <div class="space-y-0.5">
+                ${speakers.map(s => `<p class="text-xs text-gray-500">${esc(s.name)} — ${esc(s.role)}</p>`).join("")}
+              </div>` : ""}
+          </div>
+        </div>`).join("")}
+    </div>`;
+}
+
+function SummitVideoArchive() {
+  return `
+    <h2 class="font-semibold text-gray-900 mb-2">Summit Video Archive</h2>
+    <p class="text-sm text-gray-500 mb-6">Session recordings from past Summits — ${SUMMIT_VIDEOS.length} published videos.</p>
+    <div class="space-y-2">
+      ${SUMMIT_VIDEOS.map(v => `
+        <div class="flex items-center gap-3 border border-gray-200 p-3 hover:bg-gray-50 cursor-pointer">
+          <div class="w-8 h-8 bg-gray-200 flex items-center justify-center flex-shrink-0"><span class="text-gray-400 text-xs">▶</span></div>
+          <div class="flex-1 min-w-0">
+            <span class="text-sm text-gray-800">${esc(v.title)}</span>
+          </div>
+          ${TagEl(v.summit)}
+        </div>`).join("")}
+    </div>`;
+}
+
+function SummitSponsorTeaser() {
+  return `
+    <h2 class="font-semibold text-gray-900 mb-2">Become a Summit Sponsor</h2>
+    <p class="text-sm text-gray-600 max-w-2xl leading-relaxed mb-6">Companies sponsor Coqual Summit because they want to be visible in a trusted room with senior leaders working through the workforce issues that matter to business now.</p>
+    <div class="bg-gray-100 border border-gray-300 p-8 text-center">
+      <p class="text-sm text-gray-600 mb-4">Seven sponsorship levels are available, from Presenting Sponsor to Summit Insights Sponsor — in USD and GBP.</p>
+      ${Btn("View the Sponsorship Prospectus", { onclick: "nav('summit-sponsorship-prospectus')", v: "solid" })}
+    </div>`;
+}
+
+// Public Summit page — overview, keynotes, luminaries, and a sponsorship
+// teaser only. No agenda or video archive (member benefit — see
+// renderSummitMember()).
 function renderSummit() {
   return `<div>
     ${SectionNav("The Forum", [["Summit", "summit"]], "summit")}
     <div class="max-w-6xl mx-auto px-6 py-12">
-      ${Lbl("The Forum · Annual Summit")}
-      <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-2">Community of Consequence</h1>
-      <p class="text-gray-500 text-sm mb-6">Friday, December 4, 2026 · New York City + Virtual</p>
-      <div class="inline-block border border-gray-400 bg-gray-100 px-4 py-2 mb-8">
-        ${Lbl("Members-only event · Invitation required")}
-      </div>
-      <p class="text-base text-gray-700 max-w-3xl leading-relaxed mb-8">
-        The 2026 Coqual Summit is where consequential leaders come to work through what's next. For one day in New York City and virtually, Coqual brings together 200+ senior leaders, members, business operators, academics, cultural thinkers, and issue experts shaping the future of work in real time — candid, high-trust, and practical: sharp provocations, real executive dialogue, peer working sessions, and usable insights leaders can take back to their organizations.
-      </p>
-      ${GrayBox({ h: "h-64", label: "Summit venue image" })}
-
-      <h2 class="font-semibold text-gray-900 mb-2 mt-10">With the Luminaries of the Global Lab</h2>
-      <p class="text-sm text-gray-500 mb-6">${LUMINARIES.length} Luminaries and member leaders shaping the day's agenda.</p>
-      <div class="grid grid-cols-4 gap-4">
-        ${LUMINARIES.map(l => `
-          <div class="border border-gray-300 p-4 text-center">
-            ${GrayBox({ h: "h-20", label: "Photo" })}
-            <p class="font-medium text-gray-900 mt-3 text-sm">${esc(l.name)}</p>
-            <p class="text-xs text-gray-500 mt-1 leading-snug">${esc(l.title)}</p>
-          </div>`).join("")}
-      </div>
+      ${SummitHero()}
+      ${SummitKeynotes()}
+      ${SummitLuminaries()}
 
       ${HR()}
 
-      <h2 class="font-semibold text-gray-900 mb-6">Agenda</h2>
-      <div class="space-y-2 mb-10">
-        ${SUMMIT_2026_AGENDA.map(({ time, title, speakers }) => `
-          <div class="border border-gray-200 p-4 grid grid-cols-4 gap-4">
-            <div class="text-xs font-mono text-gray-500">${esc(time)}</div>
-            <div class="col-span-3">
-              <p class="font-medium text-gray-900 text-sm mb-1">${esc(title)}</p>
-              ${speakers.length > 0 ? `
-                <div class="space-y-0.5">
-                  ${speakers.map(s => `<p class="text-xs text-gray-500">${esc(s.name)} — ${esc(s.role)}</p>`).join("")}
-                </div>` : ""}
-            </div>
-          </div>`).join("")}
-      </div>
-
-      <div class="mt-10 bg-gray-100 border border-gray-300 p-8 text-center">
-        <p class="text-sm text-gray-600 mb-4">Summit attendance is a member benefit. Full agenda, registration, and pre-reads are available in the member area.</p>
+      <div class="bg-gray-100 border border-gray-300 p-8 text-center mb-10">
+        <p class="text-sm text-gray-600 mb-4">Summit attendance is a member benefit. Full agenda, registration, session recordings, and pre-reads are available in the member area.</p>
         ${Btn("Request a Membership Conversation", { onclick: "nav('request-form')", v: "solid" })}
       </div>
 
       ${HR()}
 
-      <h2 class="font-semibold text-gray-900 mb-2">Become a Summit Sponsor</h2>
-      <p class="text-sm text-gray-600 max-w-2xl leading-relaxed mb-6">This is a sponsorship for organizations that want to understand where leaders are headed before the conversation becomes public language. Sponsors get closer to the questions, concerns, and language shaping the future of work.</p>
-      <div class="grid grid-cols-3 gap-8 mb-10">
-        <div class="col-span-2 border-2 border-gray-900 p-6">
-          <div class="flex items-start justify-between mb-4">
-            <h3 class="font-semibold text-gray-900 text-lg">Summit Sponsorship</h3>
-            <p class="text-2xl font-semibold text-gray-900">$15,000</p>
-          </div>
-          <div class="space-y-2">
-            ${[
-              "Priority seats for senior leaders",
-              "Access to a private pre-Summit Innovation Lab",
-              "A role in shaping a defining question for the Summit",
-              "The Coqual Signal Brief, with early insights from the room",
-              "A private post-Summit debrief for internal leaders",
-            ].map(b => `
-              <div class="flex gap-2 items-start">
-                <div class="w-1.5 h-1.5 bg-gray-700 rounded-full flex-shrink-0 mt-1.5"></div>
-                <p class="text-sm text-gray-700">${esc(b)}</p>
-              </div>`).join("")}
-          </div>
-          ${Btn("Become a Sponsor", { onclick: "nav('partnership-prospectus')", v: "solid", extraClass: "mt-5" })}
-        </div>
-        <div class="border border-gray-300 p-5">
-          <h3 class="font-semibold text-gray-900 mb-3 text-sm">Sponsor a Keynote</h3>
-          <p class="text-xs text-gray-500 mb-4 leading-relaxed">Align your organization with one of this year's headline voices.</p>
-          <div class="space-y-3">
-            ${SUMMIT_SPONSOR_KEYNOTES.map(k => `
-              <div>
-                <p class="text-xs font-medium text-gray-900">${esc(k.name)}</p>
-                <p class="text-xs text-gray-500 leading-snug">${esc(k.role)}</p>
-              </div>`).join("")}
-          </div>
-          <div class="mt-4">${Btn("Inquire →", { onclick: "nav('request-form')", v: "ghost" })}</div>
-        </div>
-      </div>
+      ${SummitSponsorTeaser()}
+    </div>
+    </div>`;
+}
+
+// Member Summit page — same overview, plus the full agenda and the
+// complete Summit video archive (both member-only benefits).
+function renderSummitMember() {
+  return `<div>
+    ${SectionNav("The Forum", [["Dashboard", "dashboard"], ["Calendar", "forum-calendar"], ["Summit", "summit-member"]], "summit-member")}
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      ${SummitHero()}
+      ${SummitKeynotes()}
+      ${SummitLuminaries()}
 
       ${HR()}
 
-      <h2 class="font-semibold text-gray-900 mb-2">Summit Video Archive</h2>
-      <p class="text-sm text-gray-500 mb-6">Session recordings from past Summits — ${SUMMIT_VIDEOS.length} published videos.</p>
-      <div class="space-y-2">
-        ${SUMMIT_VIDEOS.map(v => `
-          <div class="flex items-center gap-3 border border-gray-200 p-3 hover:bg-gray-50 cursor-pointer">
-            <div class="w-8 h-8 bg-gray-200 flex items-center justify-center flex-shrink-0"><span class="text-gray-400 text-xs">▶</span></div>
-            <div class="flex-1 min-w-0">
-              <span class="text-sm text-gray-800">${esc(v.title)}</span>
-            </div>
-            ${TagEl(v.summit)}
-          </div>`).join("")}
-      </div>
+      ${SummitAgenda()}
+
+      ${HR()}
+
+      ${SummitSponsorTeaser()}
+
+      ${HR()}
+
+      ${SummitVideoArchive()}
     </div>
     </div>`;
 }
@@ -831,7 +865,8 @@ function renderBlogPost() {
 }
 
 const HIDDEN_PAGES = [
-  { label: "Sponsor Prospectus", page: "sponsor-prospectus" },
+  { label: "Sponsor Prospectus (Research)", page: "sponsor-prospectus" },
+  { label: "Summit Sponsorship Prospectus", page: "summit-sponsorship-prospectus" },
   { label: "Media Kit", page: "media-kit" },
   { label: "Partnership Prospectus", page: "partnership-prospectus" },
   { label: "Executive Briefing Request", page: "executive-briefing-request" },
@@ -1445,6 +1480,284 @@ function renderPartnershipProspectus() {
           Start a Conversation
         </button>
       </div>
+    </div>
+  </div>`;
+}
+
+const SUMMIT_QUESTIONS = [
+  "How will AI change judgment, trust, and opportunity?",
+  "How do companies build talent systems that see and move capability?",
+  "What does inclusion need to become inside a changing business environment?",
+  "How do leaders earn trust when employees are skeptical, tired, or uncertain?",
+  "How do organizations design work so more people can contribute at their highest level?",
+];
+
+const SUMMIT_SPONSOR_GAINS = [
+  "Reach senior HR, talent, inclusion, transformation, AI, and business leaders",
+  "Associate their brand with practical, research-backed thinking",
+  "Support a respected community shaping the future of work",
+  "Connect with leaders making decisions about people, technology, trust, and performance",
+  "Bring useful insights back to internal teams, clients, or executive stakeholders",
+  "Engage global colleagues and clients through virtual programming and intentional peer connection",
+];
+
+const SUMMIT_AUDIENCE = [
+  "CHROs & Chief People Officers",
+  "Heads of Talent, Learning, Culture, Inclusion & HR Transformation",
+  "Business Leaders Shaping Workforce Strategy",
+  "AI, Digital & Responsible Innovation Leaders",
+  "B/ERG Leaders & Executive Sponsors",
+  "Researchers, Luminaries & Cultural Thinkers",
+  "Coqual Members & Partner Organizations",
+  "Virtual Participants from Global Teams, Including UK & Europe",
+];
+
+const SUMMIT_PROGRAM_ELEMENTS = [
+  { t: "Main Stage", d: "Main-stage conversations with senior leaders, luminaries, and issue experts" },
+  { t: "Keynotes", d: "Keynotes that bring fresh perspective to urgent business questions" },
+  { t: "Breakouts", d: "Breakout working sessions on specific leadership and workforce challenges" },
+  { t: "Braindate Global Networking", d: "Intentional small-group conversations that allow in-person and virtual participants to connect across roles, markets, and organizations" },
+  { t: "Luminary Table", d: "A pre-Summit Luminary Table for select sponsors and contributors" },
+  { t: "Connection Moments", d: "Connection moments designed to build trust, not just exchange business cards" },
+  { t: "Insights Brief", d: "A post-Summit Insights Brief capturing the questions, themes, and practical ideas surfaced across the day" },
+];
+
+const SUMMIT_BRAINDATE_TOPICS = [
+  "AI and Human Judgment", "HR Transformation", "Neuroinclusion & Adaptive Work",
+  "Sponsorship & Talent Mobility", "B/ERG Leadership & Employee Voice", "Trust & Leadership Credibility",
+  "Global Inclusion", "Manager Capability", "Leadership in Uncertainty",
+];
+
+const SUMMIT_BRAINDATE_BENEFITS = [
+  "Recognition as the Braindate Sponsor across the virtual and networking experience",
+  "Input into Braindate prompt categories",
+  "Seats for global colleagues, clients, or partners",
+  "Visibility with in-person and virtual participants",
+  "Summary of common topics and questions from Braindate conversations",
+  "Opportunity to support a UK-facing follow-up conversation or post-Summit insight session",
+];
+
+const SUMMIT_THEME_AREAS = [
+  { t: "AI, Judgment, and Accountability", q: "What should remain human as AI becomes part of more decisions?" },
+  { t: "Talent Mobility and Sponsorship", q: "How do companies find and move talent when traditional career paths are changing?" },
+  { t: "Trust and Leadership Credibility", q: "What do employees need from leaders when confidence is low and change is constant?" },
+  { t: "B/ERGs and Employee Voice", q: "How can employee communities help leaders understand what is happening inside the organization?" },
+  { t: "Neuroinclusion and Adaptive Work", q: "How should work change so more people can contribute at their highest level?" },
+  { t: "Demographic Change and Workforce Planning", q: "How should companies prepare for longer lives, caregiving demands, aging workforces, and shifting generations?" },
+  { t: "Inclusion and Business Performance", q: "How does inclusion become part of leadership, talent, risk, and performance?" },
+  { t: "Leadership in Uncertainty", q: "How do leaders create clarity when the path is changing?" },
+];
+
+const SUMMIT_SPONSOR_BENEFITS_GENERAL = [
+  "Recognition across Summit web, email, onsite, and virtual materials",
+  "Reserved seats for senior executives",
+  "Main-stage or session recognition",
+  "Input into a guiding question connected to the sponsored theme or session",
+  "Participation in the pre-Summit Luminary Table",
+  "Recognition in the Summit Insights Brief",
+  "Early access to post-Summit takeaways",
+  "Private readout for internal leaders",
+  "Opportunities to join relevant sessions, Braindates, and peer conversations",
+  "Connection with Coqual members, luminaries, and senior leaders",
+  "Options for UK or global stakeholder engagement through virtual participation and follow-up conversations",
+];
+
+const SUMMIT_WHY_IT_MATTERS = [
+  "A senior room for practical workforce conversations",
+  "Access for in-person and virtual participants",
+  "High-quality main-stage and breakout experiences",
+  "Thoughtful peer exchange through Braindate and working sessions",
+  "Useful post-Summit takeaways leaders can bring back to their organizations",
+  "A more global Summit experience that includes leaders who cannot be in New York in person",
+];
+
+function SummitProspectusSection(label, heading) {
+  return `${Lbl(label)}<h2 class="text-2xl font-semibold text-gray-900 mt-2 mb-4">${heading}</h2>`;
+}
+
+function renderSummitSponsorshipProspectus() {
+  return `<div>
+    ${HiddenPageBanner("Sponsorship Prospectus")}
+    <div class="max-w-4xl mx-auto px-6 py-14">
+
+      <div class="mb-12 pb-8 border-b border-gray-300">
+        ${Lbl("Sponsorship Prospectus")}
+        <h1 class="text-4xl font-semibold text-gray-900 mt-4 mb-3 leading-tight">Coqual Summit 2026</h1>
+        <p class="text-lg text-gray-600 max-w-2xl leading-relaxed mb-8">A senior leadership gathering on the people questions shaping business performance.</p>
+        <div class="grid grid-cols-3 gap-6">
+          <div>
+            <p class="text-xs font-mono text-gray-400 uppercase tracking-wide mb-1">Date</p>
+            <p class="text-sm text-gray-900">Friday, December 4, 2026</p>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-gray-400 uppercase tracking-wide mb-1">Location</p>
+            <p class="text-sm text-gray-900">Cornell Tech · New York City + Virtual</p>
+          </div>
+          <div>
+            <p class="text-xs font-mono text-gray-400 uppercase tracking-wide mb-1">Sponsorship</p>
+            <p class="text-sm text-gray-900">Available in USD and GBP</p>
+          </div>
+        </div>
+      </div>
+
+      ${SummitProspectusSection("About the Summit", "A Day for Leaders Who Want More Than Inspiration")}
+      <p class="text-sm text-gray-700 leading-relaxed mb-4">Coqual Summit brings together senior leaders, member companies, researchers, operators, cultural thinkers, and luminaries to work through the workforce questions companies are facing now.</p>
+      <p class="text-sm text-gray-700 leading-relaxed mb-4">This is a day for leaders who want more than inspiration. It is a working environment for serious conversation, practical insight, and stronger connections across the Coqual community.</p>
+      <p class="text-sm text-gray-700 leading-relaxed mb-8">The Summit is anchored in New York and designed for global participation. Sponsors can engage senior leaders in person, virtually, or through a hybrid approach that supports colleagues, clients, and partners across markets, including the UK.</p>
+
+      <div class="bg-gray-50 border border-gray-200 p-6 mb-12">
+        <p class="text-xs font-mono uppercase tracking-widest text-gray-500 mb-4">The Questions Shaping the Day</p>
+        <div class="space-y-3">
+          ${SUMMIT_QUESTIONS.map(q => `
+            <div class="flex gap-3 items-start">
+              <div class="w-1.5 h-1.5 bg-gray-500 rounded-full flex-shrink-0 mt-1.5"></div>
+              <p class="text-sm text-gray-700">${esc(q)}</p>
+            </div>`).join("")}
+        </div>
+      </div>
+
+      ${SummitProspectusSection("Sponsor Coqual Summit 2026", "Show Your Leadership in the Room with the Executives Shaping How Work Changes")}
+      <p class="text-sm text-gray-700 leading-relaxed mb-5">Companies sponsor Coqual Summit because they want to be visible in a trusted room with senior leaders working through the workforce issues that matter to business now.</p>
+      <p class="text-xs font-mono uppercase tracking-wide text-gray-500 mb-3">Sponsors Gain a Credible Way To:</p>
+      <div class="space-y-2 mb-6">
+        ${SUMMIT_SPONSOR_GAINS.map(b => `
+          <div class="flex gap-2 items-start">
+            <div class="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0 mt-1.5"></div>
+            <p class="text-sm text-gray-700">${esc(b)}</p>
+          </div>`).join("")}
+      </div>
+      <p class="text-sm text-gray-600 leading-relaxed mb-12 italic">For UK sponsors, the Summit offers a way to participate in Coqual's global convening power without requiring every stakeholder to travel to New York. Sponsorship can support virtual participation, global networking, UK-facing follow-up conversations, and practical insight-sharing with leaders across markets.</p>
+
+      ${SummitProspectusSection("Why Coqual", "22+ Years of Research. A Trusted Member Community. Conversations Leaders Cannot Have Everywhere.")}
+      <p class="text-sm text-gray-700 leading-relaxed mb-4">For more than two decades, Coqual has helped companies understand the talent dynamics that shape business performance: belonging, sponsorship, bias, leadership, advancement, identity, trust, inclusion, and employee voice.</p>
+      <p class="text-sm text-gray-700 leading-relaxed mb-12">Our members come to Coqual for research they can trust, conversations they cannot have everywhere, and a peer community willing to work through difficult questions with candor and care. The Summit brings together the people shaping how work changes inside major organizations and gives sponsors a credible place to stand with them.</p>
+
+      ${SummitProspectusSection("Audience", "Who Will Be in the Room")}
+      <p class="text-sm text-gray-700 leading-relaxed mb-5">Coqual Summit is designed for leaders responsible for how work changes inside organizations. This audience is looking for useful ideas, strong peers, credible partners, and practical ways to bring insight back into the business.</p>
+      <div class="grid grid-cols-2 gap-2 mb-12">
+        ${SUMMIT_AUDIENCE.map(a => `
+          <div class="flex items-center gap-3 border border-gray-200 px-4 py-2.5">
+            <div class="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></div>
+            <span class="text-sm text-gray-700">${esc(a)}</span>
+          </div>`).join("")}
+      </div>
+
+      ${SummitProspectusSection("Program", "What the Day Will Include")}
+      <p class="text-sm text-gray-700 leading-relaxed mb-6">The goal is to help leaders leave with sharper questions, better language, useful ideas, and stronger relationships.</p>
+      <div class="grid grid-cols-2 gap-4 mb-12">
+        ${SUMMIT_PROGRAM_ELEMENTS.map(({ t, d }) => `
+          <div class="border border-gray-300 p-4">
+            <h3 class="font-semibold text-gray-900 mb-1 text-sm">${esc(t)}</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">${esc(d)}</p>
+          </div>`).join("")}
+      </div>
+
+      ${SummitProspectusSection("Braindate Sponsorship", "A Global Connection Opportunity Designed for Intentional Networking")}
+      <p class="text-sm text-gray-700 leading-relaxed mb-4">Rather than leaving networking to chance, Braindate allows participants to create or join small-group conversations around the questions most relevant to their work. It gives hundreds of leaders a structured way to find one another, compare challenges, exchange ideas, and build relationships across companies, roles, and regions.</p>
+      <p class="text-sm text-gray-600 leading-relaxed italic mb-6">For UK sponsors, Braindate is especially powerful. It creates a visible, high-value way to support global participation without requiring every leader to be in New York.</p>
+      <div class="grid grid-cols-3 gap-6 mb-6">
+        <div class="col-span-2">
+          <p class="text-xs font-mono uppercase tracking-wide text-gray-500 mb-3">Braindate Topics May Include</p>
+          <div class="flex flex-wrap gap-2">
+            ${SUMMIT_BRAINDATE_TOPICS.map(t => `<span class="border border-gray-400 text-gray-700 text-xs font-mono px-3 py-1.5">${esc(t)}</span>`).join("")}
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-mono uppercase tracking-wide text-gray-500 mb-3">Braindate Sponsor Benefits</p>
+          <div class="space-y-1.5">
+            ${SUMMIT_BRAINDATE_BENEFITS.map(b => `<p class="text-xs text-gray-600 leading-relaxed">→ ${esc(b)}</p>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      ${HR()}
+
+      ${SummitProspectusSection("Theme Areas", "Theme Areas Sponsors Can Support")}
+      <div class="grid grid-cols-2 gap-4 mb-12">
+        ${SUMMIT_THEME_AREAS.map(({ t, q }) => `
+          <div class="border border-gray-300 p-4">
+            <h3 class="font-semibold text-gray-900 mb-2 text-sm">${esc(t)}</h3>
+            <p class="text-xs text-gray-600 leading-relaxed italic">${esc(q)}</p>
+          </div>`).join("")}
+      </div>
+
+      ${SummitProspectusSection("Investment", "Sponsorship Levels")}
+      <p class="text-xs text-gray-500 leading-relaxed mb-6">For UK conversations, sponsor figures may be shown in both USD and GBP. GBP figures are rounded estimates based on recent exchange rates and should be confirmed at contracting.</p>
+      <div class="border border-gray-300 mb-2">
+        <div class="grid grid-cols-3 bg-gray-100 border-b border-gray-300 px-4 py-2">
+          <p class="text-xs font-mono uppercase tracking-wide text-gray-500">Sponsor Level</p>
+          <p class="text-xs font-mono uppercase tracking-wide text-gray-500">USD</p>
+          <p class="text-xs font-mono uppercase tracking-wide text-gray-500">Approx. GBP</p>
+        </div>
+        ${SUMMIT_SPONSOR_LEVELS.map(({ level, usd, gbp }) => `
+          <div class="grid grid-cols-3 border-b border-gray-200 last:border-0 px-4 py-2.5">
+            <p class="text-sm text-gray-900">${esc(level)}</p>
+            <p class="text-sm text-gray-700">${esc(usd)}</p>
+            <p class="text-sm text-gray-500">${esc(gbp)}</p>
+          </div>`).join("")}
+      </div>
+
+      <div class="space-y-6 my-10">
+        ${SUMMIT_SPONSOR_LEVELS.map(({ level, usd, gbp, audience, supports, benefits }, i) => `
+          <div class="${i === 0 ? "border-2 border-gray-900" : "border border-gray-300"} p-6">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h3 class="font-semibold text-gray-900 text-lg">${esc(level)}</h3>
+                <p class="text-xs text-gray-500 mt-0.5">${esc(audience)}</p>
+              </div>
+              <div class="text-right flex-shrink-0 ml-4">
+                <p class="text-2xl font-semibold text-gray-900">${esc(usd)}</p>
+                <p class="text-xs text-gray-400 font-mono">approx. ${esc(gbp)}</p>
+              </div>
+            </div>
+            <p class="text-xs font-mono uppercase tracking-wide text-gray-400 mb-1">Supports</p>
+            <p class="text-sm text-gray-700 leading-relaxed mb-4">${esc(supports)}</p>
+            <p class="text-xs font-mono uppercase tracking-wide text-gray-400 mb-2">Benefits Include</p>
+            <div class="grid grid-cols-2 gap-2 mb-5">
+              ${benefits.map(b => `
+                <div class="flex gap-2 items-start">
+                  <div class="w-1.5 h-1.5 bg-gray-500 rounded-full flex-shrink-0 mt-1.5"></div>
+                  <p class="text-xs text-gray-700">${esc(b)}</p>
+                </div>`).join("")}
+            </div>
+            ${Btn("Inquire Now", { onclick: "nav('request-form')", v: i === 0 ? "solid" : "outline" })}
+          </div>`).join("")}
+      </div>
+
+      ${SummitProspectusSection("Sponsor Benefits", "What Sponsors Receive")}
+      <p class="text-sm text-gray-600 leading-relaxed mb-5">Sponsor benefits vary by level, but may include:</p>
+      <div class="grid grid-cols-2 gap-2 mb-6">
+        ${SUMMIT_SPONSOR_BENEFITS_GENERAL.map(b => `
+          <div class="flex items-center gap-3 border border-gray-200 px-4 py-2.5">
+            <div class="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></div>
+            <span class="text-sm text-gray-700">${esc(b)}</span>
+          </div>`).join("")}
+      </div>
+      <p class="text-sm text-gray-600 leading-relaxed italic mb-12">Coqual maintains editorial direction for the Summit agenda and content. Sponsors help shape useful questions. Coqual designs and facilitates the room.</p>
+
+      ${SummitProspectusSection("Why It Matters", "What Sponsorship Makes Possible")}
+      <p class="text-sm text-gray-700 leading-relaxed mb-3">Sponsors help Coqual create:</p>
+      <div class="space-y-2 mb-5">
+        ${SUMMIT_WHY_IT_MATTERS.map(b => `
+          <div class="flex gap-2 items-start">
+            <div class="w-1.5 h-1.5 bg-gray-500 rounded-full flex-shrink-0 mt-1.5"></div>
+            <p class="text-sm text-gray-700">${esc(b)}</p>
+          </div>`).join("")}
+      </div>
+      <p class="text-sm text-gray-600 leading-relaxed italic mb-12">Sponsors make the Summit stronger. They also gain a credible place to show what they stand for.</p>
+
+      <div class="bg-gray-900 text-white p-10 text-center">
+        ${Lbl("Join Us at Cornell Tech + Virtually")}
+        <h2 class="text-2xl font-semibold mt-3 mb-2">December 4, 2026</h2>
+        <p class="text-gray-400 text-sm mb-6">New York City + Virtual</p>
+        <p class="text-gray-300 text-sm leading-relaxed max-w-2xl mx-auto mb-4">The companies shaping work need better places to think together. Coqual Summit gives senior leaders that place. Sponsors help make the room possible and gain a credible way to show what they stand for, meet the leaders they want to reach, and understand the workforce questions shaping the year ahead.</p>
+        <p class="text-gray-400 text-xs leading-relaxed max-w-2xl mx-auto mb-8 italic">For UK sponsors, the Summit offers both a global platform and a practical way to connect leaders across markets through virtual participation, intentional networking, and post-Summit insight sharing.</p>
+        <button onclick="nav('request-form')" class="border border-white text-white px-6 py-3 font-mono text-xs hover:bg-white hover:text-gray-900 transition-colors mb-4">
+          Inquire About Sponsorship
+        </button>
+        <p class="text-xs text-gray-500 font-mono">Contact: info@coqual.org</p>
+      </div>
+
     </div>
   </div>`;
 }

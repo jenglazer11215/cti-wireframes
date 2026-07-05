@@ -97,7 +97,7 @@ function renderForumCalendar() {
     .filter(e => activeTheme === "All" || e.tag === activeTheme);
 
   return `<div>
-    ${SectionNav("The Forum", [["Dashboard", "dashboard"], ["Calendar", "forum-calendar"], ["Summit", "summit"]], "forum-calendar")}
+    ${SectionNav("The Forum", [["Dashboard", "dashboard"], ["Calendar", "forum-calendar"], ["Summit", "summit-member"]], "forum-calendar")}
     <div class="max-w-6xl mx-auto px-6 py-8">
       <div class="flex items-center justify-between mb-6">
         <div>${Lbl("The Forum · 2027 Calendar")}<h1 class="text-2xl font-semibold text-gray-900 mt-1">Session Calendar</h1></div>

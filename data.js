@@ -533,7 +533,7 @@ const MEMBER_PAGES = [
   "consequential-member", "post-member", "playbooks", "playbook-detail",
   "coalition", "luminary-archive", "luminary-profile", "advisory-member",
   "ctilearning", "member-directory", "my-membership",
-  "research", "luminary-exchange-member",
+  "research", "luminary-exchange-member", "summit-member",
 ];
 
 // Real published Summit session videos (source: Summit Videos Archive,
@@ -556,4 +556,95 @@ const SUMMIT_VIDEOS = [
   { title: "The Power of Possible: Negotiating Clarity in Uncertain Times", summit: "Summit 2025", published: "Dec 2, 2025", topic: "Leadership", geography: ["Global"], resourceType: "Video" },
   { title: "We are the Leaders We Have Been Looking For: A Fireside Chat with Eddie S. Glaude", summit: "Summit 2024", published: "Nov 19, 2024", topic: "Leadership", geography: ["Global"], resourceType: "Video" },
   { title: "What Breaks Leaders – and What Saves Them", summit: "Summit 2025", published: "Dec 2, 2025", topic: "Leadership", geography: ["Global"], resourceType: "Video" },
+];
+
+// Real Summit 2026 sponsorship tiers (source: Sponsorship Prospectus content).
+const SUMMIT_SPONSOR_LEVELS = [
+  {
+    level: "Presenting Sponsor", usd: "$50,000", gbp: "£37,500",
+    audience: "Lead supporter of Coqual Summit 2026. For companies that want the strongest visibility across the full Summit experience.",
+    supports: "The full in-person and virtual Summit experience",
+    benefits: [
+      "Top-level recognition across Summit materials",
+      "Reserved seats for senior executives",
+      "Recognition from the main stage",
+      "Participation in the sponsor planning conversation",
+      "Access to the pre-Summit Luminary Table",
+      "Early access to the Summit Insights Brief",
+      "Private post-Summit readout for internal leaders",
+      "Opportunity to include global colleagues or clients in virtual programming",
+    ],
+  },
+  {
+    level: "General Session Sponsor", usd: "$25,000", gbp: "£18,750",
+    audience: "For companies that want visibility around one of the central conversations of the day.",
+    supports: "A keynote, panel, interview, or main-stage dialogue with senior leaders, luminaries, or issue experts",
+    benefits: [
+      "Recognition connected to the session",
+      "Reserved seats for senior leaders",
+      "Optional executive introduction or framing moment, where appropriate",
+      "Session takeaways included in the post-Summit readout",
+      "Opportunity to share relevant takeaways with global or UK-based stakeholders after the Summit",
+    ],
+  },
+  {
+    level: "Working Session Sponsor", usd: "$15,000", gbp: "£11,250",
+    audience: "For companies that want more focused engagement with senior leaders.",
+    supports: "A facilitated breakout or peer working session where leaders work through a practical question",
+    benefits: [
+      "Recognition tied to the session",
+      "Reserved seats in the session",
+      "Input into the working question",
+      "Captured takeaways from the conversation",
+      "Opportunity to nominate a sponsor executive participant, where appropriate",
+    ],
+  },
+  {
+    level: "Braindate Sponsor", usd: "$15,000", gbp: "£11,250",
+    audience: "For companies that want to help hundreds of leaders connect through purposeful small-group networking across markets.",
+    supports: "The Braindate experience for in-person and virtual participants",
+    benefits: [
+      "Recognition as the Braindate Sponsor",
+      "Visibility across the networking and virtual experience",
+      "Input into Braindate prompt categories",
+      "Seats for global colleagues, clients, or partners",
+      "Summary of common topics and questions from Braindate conversations",
+      "Opportunity to support a UK-facing follow-up discussion or insight-sharing moment",
+    ],
+  },
+  {
+    level: "Luminary Exchange Sponsor", usd: "$15,000", gbp: "£11,250",
+    audience: "For companies that want a closer role in shaping the ideas and questions explored at Summit.",
+    supports: "A curated pre-Summit conversation with Coqual leaders, select luminaries, and sponsor participants",
+    benefits: [
+      "Seat at the Luminary Table",
+      "Input into one question or theme",
+      "Reserved Summit seats",
+      "Recognition connected to the Luminary Table",
+      "Post-Summit takeaways connected to the discussion",
+    ],
+  },
+  {
+    level: "Reception or Connection Sponsor", usd: "$10,000", gbp: "£7,500",
+    audience: "For companies that want to support the human connection that makes the Summit valuable.",
+    supports: "Breakfast, lunch, reception, curated networking, Big Talk, or other relationship-building moments",
+    benefits: [
+      "Recognition connected to the experience",
+      "Reserved seats",
+      "Optional welcome moment, where appropriate",
+      "Visibility in event materials and onsite signage",
+    ],
+  },
+  {
+    level: "Summit Insights Sponsor", usd: "$5,000", gbp: "£3,750",
+    audience: "For companies that want the Summit to create something useful after the Summit.",
+    supports: "A concise Coqual-written executive brief capturing what leaders discussed, questioned, and prioritized",
+    benefits: [
+      "Recognition on the brief",
+      "Early access to the brief",
+      "Private readout for internal leaders",
+      "Reserved Summit seats",
+      "Opportunity to suggest one question for Coqual to listen for across the day",
+    ],
+  },
 ];
