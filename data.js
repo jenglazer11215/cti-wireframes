@@ -37,7 +37,6 @@ const BOARD = [
   { name: "Susan Reid", title: "Global Head of Talent, Morgan Stanley" },
   { name: "David G. Richardson", title: "Partner, Reitler Kailas & Rosenblatt LLP" },
   { name: "Melinda B. Wolfe", title: "Former Chief People Officer / HR Consultant / Executive Coach" },
-  { name: "Sylvia Ann Hewlett", title: "Founder & Chair Emeritus" },
 ];
 
 const FORUM_EVENTS = [
@@ -164,15 +163,15 @@ const FORUM_EVENTS = [
     speakers: [{ name: "Alison Taylor", role: "Luminary · NYU Stern School of Business" }, { name: "CTI Forum Facilitator", role: "Session Lead, TBD" }],
   },
   {
-    id: "dec-2027", title: "CTI Summit",
+    id: "dec-2027", title: "Coqual Summit 2026: Community of Consequence",
     format: "Flagship Convening",
-    month: "DEC", day: "2", date: "Dec 2, 2027",
-    timeNYC: "11:00 AM ET", timeLondon: "4:00 PM GMT", timeGermany: "5:00 PM CET", timeMumbai: "9:30 PM IST",
+    month: "DEC", day: "4", date: "Dec 4, 2026",
+    timeNYC: "9:00 AM ET", timeLondon: "2:00 PM GMT", timeGermany: "3:00 PM CET", timeMumbai: "7:30 PM IST",
     location: "New York City + Virtual", tag: "Summit", topic: "Leadership", geography: ["United States", "Global"], access: "Premium + Co-Chair", membersOnly: true, past: false,
     audience: "Members, senior leaders, researchers, Luminaries, member organizations",
-    description: "Bring the coalition together around the year's biggest questions. Flagship annual convening. Full agenda, Luminary sessions, research launches, and member networking.",
+    description: "For one day in New York City and virtually, Coqual brings together 200+ senior leaders, members, business operators, academics, cultural thinkers, and issue experts shaping the future of work in real time — candid, high-trust, and practical.",
     pillar: "The Forum / CTI Summit",
-    speakers: [{ name: "Jennie Glazer", role: "CEO, CTI" }, { name: "Sylvia Ann Hewlett", role: "Founder & Chair Emeritus" }, { name: "Multiple Luminaries", role: "Full speaker list TBD" }],
+    speakers: [{ name: "Jennie Glazer", role: "CEO, Coqual" }, { name: "William Ury", role: "Author, Possible; Co-founder, Program on Negotiation, Harvard University" }, { name: "Nikole Hannah-Jones", role: "Pulitzer Prize-winning Reporter, Founder, 1619 Project" }],
   },
   // ── 2027 Co-Chair Events ───────────────────────────────────────────────────
   {

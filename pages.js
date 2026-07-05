@@ -296,27 +296,142 @@ function renderForumPublic() {
     </div>`;
 }
 
+// Real Summit 2026 agenda (source: Coqual Summit Planning Deck - 2026).
+const SUMMIT_2026_AGENDA = [
+  { time: "8:00 – 9:00 AM", title: "Arrival, Breakfast, and Registration", speakers: [] },
+  { time: "9:00 – 9:15 AM", title: "Opening", speakers: [{ name: "Jennie Glazer", role: "CEO, Coqual" }] },
+  { time: "9:15 – 9:45 AM", title: "Big Talk: Skip the Script, Build the Trust", speakers: [{ name: "Kalina Silverman", role: "Documentary Journalist; Creator, Big Talk" }] },
+  { time: "9:45 – 10:30 AM", title: "Inclusion 2.0", speakers: [
+    { name: "Anne Erni", role: "Chief People Officer, Audible" },
+    { name: "Jeff Marshall", role: "Chief Inclusion & Impact Officer, Burson" },
+    { name: "Alison Francis", role: "VP, Chief Diversity Officer, Costco" },
+    { name: "Pooja Jain-Link", role: "Head of Diversity, Inclusion, and Belonging Shared Services, Capital One" },
+  ]},
+  { time: "10:30 – 10:45 AM", title: "Break", speakers: [] },
+  { time: "10:45 – 11:30 AM", title: "Is AI Cheating? Women, Work, and the Next Wave of Leadership", speakers: [
+    { name: "Lisa S. Kaplowitz", role: "Associate Professor of Professional Practice, Finance; ED, Rutgers Center for Women in Business" },
+    { name: "Cassie Young", role: "Managing Partner, Primary VC" },
+    { name: "Bhushan Sethi", role: "Partner, PwC" },
+    { name: "Jayna Kothary", role: "Chief Solutions Officer, IPG" },
+  ]},
+  { time: "11:30 AM – 12:00 PM", title: "Rethinking Assumptions in an Age of Demographic Change", speakers: [
+    { name: "Jennifer D. Sciubba, Ph.D.", role: "President and CEO, Population Reference Bureau" },
+    { name: "Trevor Gandy", role: "Global Head of Inclusion & Diversity, AXA XL" },
+  ]},
+  { time: "12:00 – 12:30 PM", title: "History & Stories to Light Our Way", speakers: [
+    { name: "Tope Ajala", role: "Entrepreneur & Host; Former Global Chief Impact Officer, Ogilvy" },
+    { name: "Nikole Hannah-Jones", role: "Pulitzer Prize-winning Reporter, Founder, 1619 Project" },
+  ]},
+  { time: "1:15 – 2:00 PM", title: "The Power of Possible: Negotiating Clarity in Uncertain Times", speakers: [
+    { name: "William Ury", role: "Author, Possible; Co-founder, Program on Negotiation, Harvard University" },
+    { name: "Ellen McGirt", role: "Editor-in-Chief, Design Observer" },
+  ]},
+  { time: "2:00 – 2:45 PM", title: "What Breaks Leaders — and What Saves Them", speakers: [
+    { name: "Sumona De Graaf, Ph.D.", role: "Founder & CEO, idealis; Coqual Board Member" },
+    { name: "Matthew McCarthy", role: "Former CEO, Ben & Jerry's" },
+    { name: "Allison Williams", role: "Chief Learning Officer, idealis" },
+  ]},
+  { time: "2:45 – 3:00 PM", title: "Break", speakers: [] },
+  { time: "3:00 – 3:45 PM", title: "The Leadership We Need Now", speakers: [
+    { name: "Kellie A. McElhaney, Ph.D.", role: "Founder & ED, Center for Equity, Gender and Leadership; Coqual Board Member; UC Berkeley-Haas" },
+    { name: "Oscar Holmes IV, Ph.D.", role: "Professor & Director, RUSE Program, Rutgers University–Camden" },
+    { name: "Liliahn Majeed", role: "Chief Diversity, Equity & Inclusion Officer, North America, L’Oréal Groupe" },
+  ]},
+  { time: "3:45 – 4:00 PM", title: "Closing Reflections", speakers: [{ name: "Jennie Glazer", role: "CEO, Coqual" }] },
+];
+
+const SUMMIT_SPONSOR_KEYNOTES = [
+  { name: "Joy-Ann Reid", role: "Award-Winning Journalist; Former MSNBC Political Analyst & Host, The ReidOut; NYT Bestselling Author" },
+  { name: "Jodi Kantor", role: "Pulitzer Prize-winning Journalist and Author, The New York Times" },
+  { name: "Tiffany D. Cross", role: "Journalist, TV Host, Podcast Host, Author, Speaker" },
+  { name: "Lee Elliot Major, OBE FAcSS", role: "Professor of Social Mobility, University of Exeter" },
+];
+
 function renderSummit() {
   return `<div>
     ${SectionNav("The Forum", [["Summit", "summit"]], "summit")}
     <div class="max-w-6xl mx-auto px-6 py-12">
       ${Lbl("The Forum · Annual Summit")}
-      <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-2">Work Reimagined: The Summit for Organizational Leaders</h1>
-      <p class="text-gray-500 text-sm mb-6">March 12–13, 2026 · New York, NY</p>
+      <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-2">Community of Consequence</h1>
+      <p class="text-gray-500 text-sm mb-6">Friday, December 4, 2026 · New York City + Virtual</p>
       <div class="inline-block border border-gray-400 bg-gray-100 px-4 py-2 mb-8">
         ${Lbl("Members-only event · Invitation required")}
       </div>
+      <p class="text-base text-gray-700 max-w-3xl leading-relaxed mb-8">
+        The 2026 Coqual Summit is where consequential leaders come to work through what's next. For one day in New York City and virtually, Coqual brings together 200+ senior leaders, members, business operators, academics, cultural thinkers, and issue experts shaping the future of work in real time — candid, high-trust, and practical: sharp provocations, real executive dialogue, peer working sessions, and usable insights leaders can take back to their organizations.
+      </p>
       ${GrayBox({ h: "h-64", label: "Summit venue image" })}
-      <div class="grid grid-cols-3 gap-6 mt-10">
-        ${["Dr. Sylvia Ann Hewlett", "Marcus Buckingham", "Dr. Tomas Chamorro-Premuzic"].map(n => Card(`
-            ${GrayBox({ h: "h-24", label: "Speaker photo" })}
-            <p class="font-medium text-gray-900 mt-3 text-sm">${esc(n)}</p>
-            <p class="text-xs text-gray-500 mt-1">Keynote Speaker</p>
-          `)).join("")}
+
+      <h2 class="font-semibold text-gray-900 mb-2 mt-10">With the Luminaries of the Global Lab</h2>
+      <p class="text-sm text-gray-500 mb-6">${LUMINARIES.length} Luminaries and member leaders shaping the day's agenda.</p>
+      <div class="grid grid-cols-4 gap-4">
+        ${LUMINARIES.map(l => `
+          <div class="border border-gray-300 p-4 text-center">
+            ${GrayBox({ h: "h-20", label: "Photo" })}
+            <p class="font-medium text-gray-900 mt-3 text-sm">${esc(l.name)}</p>
+            <p class="text-xs text-gray-500 mt-1 leading-snug">${esc(l.title)}</p>
+          </div>`).join("")}
       </div>
+
+      ${HR()}
+
+      <h2 class="font-semibold text-gray-900 mb-6">Agenda</h2>
+      <div class="space-y-2 mb-10">
+        ${SUMMIT_2026_AGENDA.map(({ time, title, speakers }) => `
+          <div class="border border-gray-200 p-4 grid grid-cols-4 gap-4">
+            <div class="text-xs font-mono text-gray-500">${esc(time)}</div>
+            <div class="col-span-3">
+              <p class="font-medium text-gray-900 text-sm mb-1">${esc(title)}</p>
+              ${speakers.length > 0 ? `
+                <div class="space-y-0.5">
+                  ${speakers.map(s => `<p class="text-xs text-gray-500">${esc(s.name)} — ${esc(s.role)}</p>`).join("")}
+                </div>` : ""}
+            </div>
+          </div>`).join("")}
+      </div>
+
       <div class="mt-10 bg-gray-100 border border-gray-300 p-8 text-center">
         <p class="text-sm text-gray-600 mb-4">Summit attendance is a member benefit. Full agenda, registration, and pre-reads are available in the member area.</p>
         ${Btn("Request a Membership Conversation", { onclick: "nav('request-form')", v: "solid" })}
+      </div>
+
+      ${HR()}
+
+      <h2 class="font-semibold text-gray-900 mb-2">Become a Summit Sponsor</h2>
+      <p class="text-sm text-gray-600 max-w-2xl leading-relaxed mb-6">This is a sponsorship for organizations that want to understand where leaders are headed before the conversation becomes public language. Sponsors get closer to the questions, concerns, and language shaping the future of work.</p>
+      <div class="grid grid-cols-3 gap-8 mb-10">
+        <div class="col-span-2 border-2 border-gray-900 p-6">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="font-semibold text-gray-900 text-lg">Summit Sponsorship</h3>
+            <p class="text-2xl font-semibold text-gray-900">$15,000</p>
+          </div>
+          <div class="space-y-2">
+            ${[
+              "Priority seats for senior leaders",
+              "Access to a private pre-Summit Innovation Lab",
+              "A role in shaping a defining question for the Summit",
+              "The Coqual Signal Brief, with early insights from the room",
+              "A private post-Summit debrief for internal leaders",
+            ].map(b => `
+              <div class="flex gap-2 items-start">
+                <div class="w-1.5 h-1.5 bg-gray-700 rounded-full flex-shrink-0 mt-1.5"></div>
+                <p class="text-sm text-gray-700">${esc(b)}</p>
+              </div>`).join("")}
+          </div>
+          ${Btn("Become a Sponsor", { onclick: "nav('partnership-prospectus')", v: "solid", extraClass: "mt-5" })}
+        </div>
+        <div class="border border-gray-300 p-5">
+          <h3 class="font-semibold text-gray-900 mb-3 text-sm">Sponsor a Keynote</h3>
+          <p class="text-xs text-gray-500 mb-4 leading-relaxed">Align your organization with one of this year's headline voices.</p>
+          <div class="space-y-3">
+            ${SUMMIT_SPONSOR_KEYNOTES.map(k => `
+              <div>
+                <p class="text-xs font-medium text-gray-900">${esc(k.name)}</p>
+                <p class="text-xs text-gray-500 leading-snug">${esc(k.role)}</p>
+              </div>`).join("")}
+          </div>
+          <div class="mt-4">${Btn("Inquire →", { onclick: "nav('request-form')", v: "ghost" })}</div>
+        </div>
       </div>
 
       ${HR()}
