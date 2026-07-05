@@ -270,28 +270,28 @@ function renderSessionAfter() {
 }
 
 const CONSEQUENTIAL_MEMBER_POSTS = [
-  { type: "Blog Post", title: "Take Up Space Anyway", date: "Jun 25, 2026", tag: "Leadership + Culture", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
-  { type: "Blog Post", title: "The Talent Was Never the Problem", date: "Jun 18, 2026", tag: "Talent Strategy", forum: "Sponsorship Proximity session", playbook: "Distributed Sponsorship Framework" },
-  { type: "Blog Post", title: "Not a Monolith, But United by Common Threads", date: "May 31, 2026", tag: "DEI Evolution", forum: "DEI Measurement session", playbook: "DEI Language After the Rollbacks" },
-  { type: "Blog Post", title: "On Being Chinese: To Eat a Culture and Promote it Too", date: "Mar 31, 2026", tag: "DEI Evolution", forum: "DEI Measurement session", playbook: "DEI Language After the Rollbacks" },
-  { type: "Blog Post", title: "What ERGs Reveal About Leadership, Trust And How Change Really Works", date: "Jan 16, 2026", tag: "Trust + Institutional Risk", forum: "Sponsorship Proximity session", playbook: "Distributed Sponsorship Framework" },
-  { type: "Blog Post", title: "How To Lead In A World Of Many Minds", date: "Nov 25, 2025", tag: "Leadership + Culture", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
-  { type: "Blog Post", title: "Uncertainty Fatigue Is Replacing Change Fatigue: What It Means For Leaders", date: "Oct 3, 2025", tag: "Organizational Performance", forum: "The Judgment Gap session", playbook: "Hybrid Policy Design" },
-  { type: "Blog Post", title: "AI Is Here. The Trust Isn't.", date: "Aug 20, 2025", tag: "AI + Work", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
-  { type: "Blog Post", title: "How to Find Your Next Big Move Before It's Obvious", date: "Aug 11, 2025", tag: "Talent Strategy", forum: "Sponsorship Proximity session", playbook: "Distributed Sponsorship Framework" },
-  { type: "Blog Post", title: "The Certainty Trap: Clarity Is a Discipline, Not a Message", date: "Jul 10, 2025", tag: "Leadership + Culture", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
-  { type: "Blog Post", title: "PRIDE Under Pressure: Notes from a Queer Millennial", date: "Jun 24, 2025", tag: "DEI Evolution", forum: "DEI Measurement session", playbook: "DEI Language After the Rollbacks" },
-  { type: "Blog Post", title: "Juneteenth 2025: A Moment to Learn, Listen, and Lead Together", date: "Jun 19, 2025", tag: "DEI Evolution", forum: "DEI Measurement session", playbook: "DEI Language After the Rollbacks" },
-  { type: "Blog Post", title: "The Leadership Paradox: What We're Asking Leaders to Hold (and How to Help Them Walk the Tightrope)", date: "Jun 7, 2025", tag: "Leadership + Culture", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
-  { type: "Blog Post", title: "The Moment My World Stopped", date: "May 29, 2025", tag: "Leadership + Culture", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
-  { type: "Blog Post", title: "If Culture Is \"Just How We Do Things Around Here,\" Then Who's Doing the Designing?", date: "Apr 24, 2025", tag: "Organizational Performance", forum: "The Judgment Gap session", playbook: "Hybrid Policy Design" },
-  { type: "Blog Post", title: "Mixed Messages Are Costing You Trust—Here's How to Fix It", date: "Mar 3, 2025", tag: "Trust + Institutional Risk", forum: "Sponsorship Proximity session", playbook: "Distributed Sponsorship Framework" },
-  { type: "Blog Post", title: "Leading Through Uncertainty: How to Bring Clarity When Everyone's Afraid", date: "Feb 26, 2025", tag: "Leadership + Culture", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
-  { type: "Blog Post", title: "What Actually Builds Resilient Teams? (Hint: It's Not Free Lunch and Yoga)", date: "Feb 11, 2025", tag: "Organizational Performance", forum: "The Judgment Gap session", playbook: "Hybrid Policy Design" },
-  { type: "Blog Post", title: "Black History Month: Bringing Teams Together Through Stories", date: "Feb 7, 2025", tag: "DEI Evolution", forum: "DEI Measurement session", playbook: "DEI Language After the Rollbacks" },
-  { type: "Blog Post", title: "Rethinking Work: The Five Questions Leaders Aren't Asking (But Should)", date: "Jan 15, 2025", tag: "Future of Work", forum: "The Judgment Gap session", playbook: "Hybrid Policy Design" },
-  { type: "Blog Post", title: "Five Generations, One Workforce: The Untapped Superpower", date: "Jan 7, 2025", tag: "Workforce Design", forum: "The Judgment Gap session", playbook: "Hybrid Policy Design" },
-  { type: "Blog Post", title: "Robots Are People Too (Sort Of?): The Future of Inclusive Team Leadership", date: "Nov 20, 2024", tag: "AI + Work", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
+  { type: "Blog Post", title: "Take Up Space Anyway", date: "Jun 25, 2026", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
+  { type: "Blog Post", title: "The Talent Was Never the Problem", date: "Jun 18, 2026", tag: "Talent Strategy", topic: "Talent & Performance", geography: ["Global"], resourceType: "Article", forum: "Sponsorship Proximity session", playbook: "Distributed Sponsorship Framework" },
+  { type: "Blog Post", title: "Not a Monolith, But United by Common Threads", date: "May 31, 2026", tag: "DEI Evolution", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", forum: "DEI Measurement session", playbook: "DEI Language After the Rollbacks" },
+  { type: "Blog Post", title: "On Being Chinese: To Eat a Culture and Promote it Too", date: "Mar 31, 2026", tag: "DEI Evolution", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", forum: "DEI Measurement session", playbook: "DEI Language After the Rollbacks" },
+  { type: "Blog Post", title: "What ERGs Reveal About Leadership, Trust And How Change Really Works", date: "Jan 16, 2026", tag: "Trust + Institutional Risk", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", forum: "Sponsorship Proximity session", playbook: "Distributed Sponsorship Framework" },
+  { type: "Blog Post", title: "How To Lead In A World Of Many Minds", date: "Nov 25, 2025", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
+  { type: "Blog Post", title: "Uncertainty Fatigue Is Replacing Change Fatigue: What It Means For Leaders", date: "Oct 3, 2025", tag: "Organizational Performance", topic: "Talent & Performance", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Hybrid Policy Design" },
+  { type: "Blog Post", title: "AI Is Here. The Trust Isn't.", date: "Aug 20, 2025", tag: "AI + Work", topic: "AI & Workforce", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
+  { type: "Blog Post", title: "How to Find Your Next Big Move Before It's Obvious", date: "Aug 11, 2025", tag: "Talent Strategy", topic: "Talent & Performance", geography: ["Global"], resourceType: "Article", forum: "Sponsorship Proximity session", playbook: "Distributed Sponsorship Framework" },
+  { type: "Blog Post", title: "The Certainty Trap: Clarity Is a Discipline, Not a Message", date: "Jul 10, 2025", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
+  { type: "Blog Post", title: "PRIDE Under Pressure: Notes from a Queer Millennial", date: "Jun 24, 2025", tag: "DEI Evolution", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", forum: "DEI Measurement session", playbook: "DEI Language After the Rollbacks" },
+  { type: "Blog Post", title: "Juneteenth 2025: A Moment to Learn, Listen, and Lead Together", date: "Jun 19, 2025", tag: "DEI Evolution", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", forum: "DEI Measurement session", playbook: "DEI Language After the Rollbacks" },
+  { type: "Blog Post", title: "The Leadership Paradox: What We're Asking Leaders to Hold (and How to Help Them Walk the Tightrope)", date: "Jun 7, 2025", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
+  { type: "Blog Post", title: "The Moment My World Stopped", date: "May 29, 2025", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
+  { type: "Blog Post", title: "If Culture Is \"Just How We Do Things Around Here,\" Then Who's Doing the Designing?", date: "Apr 24, 2025", tag: "Organizational Performance", topic: "Talent & Performance", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Hybrid Policy Design" },
+  { type: "Blog Post", title: "Mixed Messages Are Costing You Trust—Here's How to Fix It", date: "Mar 3, 2025", tag: "Trust + Institutional Risk", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", forum: "Sponsorship Proximity session", playbook: "Distributed Sponsorship Framework" },
+  { type: "Blog Post", title: "Leading Through Uncertainty: How to Bring Clarity When Everyone's Afraid", date: "Feb 26, 2025", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
+  { type: "Blog Post", title: "What Actually Builds Resilient Teams? (Hint: It's Not Free Lunch and Yoga)", date: "Feb 11, 2025", tag: "Organizational Performance", topic: "Talent & Performance", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Hybrid Policy Design" },
+  { type: "Blog Post", title: "Black History Month: Bringing Teams Together Through Stories", date: "Feb 7, 2025", tag: "DEI Evolution", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", forum: "DEI Measurement session", playbook: "DEI Language After the Rollbacks" },
+  { type: "Blog Post", title: "Rethinking Work: The Five Questions Leaders Aren't Asking (But Should)", date: "Jan 15, 2025", tag: "Future of Work", topic: "Future of Work", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Hybrid Policy Design" },
+  { type: "Blog Post", title: "Five Generations, One Workforce: The Untapped Superpower", date: "Jan 7, 2025", tag: "Workforce Design", topic: "Future of Work", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Hybrid Policy Design" },
+  { type: "Blog Post", title: "Robots Are People Too (Sort Of?): The Future of Inclusive Team Leadership", date: "Nov 20, 2024", tag: "AI + Work", topic: "AI & Workforce", geography: ["Global"], resourceType: "Article", forum: "The Judgment Gap session", playbook: "Building Judgment in AI-Augmented Teams" },
 ];
 
 function renderConsequentialMember() {
@@ -359,21 +359,29 @@ function renderPostMember() {
   </div>`;
 }
 
+// Module-level so the unified search index (components.js) can reference it.
+const PLAYBOOKS = [
+  { t: "Distributed Sponsorship Framework", c: "How do you maintain sponsorship relationships in remote organizations?", fmt: "Framework", tag: "Talent Strategy", level: "Standard", topic: "Talent & Performance", geography: ["Global"], resourceType: "Toolkit" },
+  { t: "Building Judgment in AI-Augmented Teams", c: "How do you develop judgment when AI handles the formative work?", fmt: "Playbook", tag: "AI + Work", level: "Standard", topic: "AI & Workforce", geography: ["Global"], resourceType: "Playbook" },
+  { t: "DEI Language After the Rollbacks", c: "How do you maintain DEI commitments when the vocabulary is contested?", fmt: "Guide", tag: "DEI Evolution", level: "Co-Chair", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Toolkit" },
+  { t: "Hybrid Policy Design", c: "How do you set hybrid policies that support both productivity and inclusion?", fmt: "Framework", tag: "Workforce Design", level: "Standard", topic: "Future of Work", geography: ["Global"], resourceType: "Toolkit" },
+];
+
+// Module-level so the unified search index can reference it.
+const ASSESSMENTS = [
+  { t: "Sponsorship Effectiveness Assessment", d: "Benchmark your organization's sponsorship practices against the coalition baseline.", topic: "Talent & Performance", geography: ["Global"], resourceType: "Assessment" },
+  { t: "Hybrid Inclusion Audit", d: "Identify gaps in how your hybrid policy is affecting promotion and belonging.", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Assessment" },
+];
+
 function renderPlaybooks() {
   const activeTheme = S.playbooks.theme;
   const themes = ["All", "AI + Work", "Talent Strategy", "DEI Evolution", "Workforce Design"];
-  const playbooks = [
-    { t: "Distributed Sponsorship Framework", c: "How do you maintain sponsorship relationships in remote organizations?", fmt: "Framework", tag: "Talent Strategy", level: "Standard" },
-    { t: "Building Judgment in AI-Augmented Teams", c: "How do you develop judgment when AI handles the formative work?", fmt: "Playbook", tag: "AI + Work", level: "Standard" },
-    { t: "DEI Language After the Rollbacks", c: "How do you maintain DEI commitments when the vocabulary is contested?", fmt: "Guide", tag: "DEI Evolution", level: "Co-Chair" },
-    { t: "Hybrid Policy Design", c: "How do you set hybrid policies that support both productivity and inclusion?", fmt: "Framework", tag: "Workforce Design", level: "Standard" },
-  ];
   return `<div class="max-w-6xl mx-auto px-6 py-8">
     ${Lbl("Member Resources")}
     <h1 class="text-2xl font-semibold text-gray-900 mt-1 mb-6">Playbooks</h1>
     <div class="mb-6">${Filters(themes, activeTheme, "playbooks.theme")}</div>
     <div class="grid grid-cols-2 gap-4 mb-10">
-      ${playbooks.map(({ t, c, fmt, tag, level }) => Card(`
+      ${PLAYBOOKS.map(({ t, c, fmt, tag, level }) => Card(`
           <div class="flex items-start justify-between mb-2">${Lbl(fmt)}${TagEl(level)}</div>
           <h3 class="font-medium text-gray-900 mb-1 text-sm">${esc(t)}</h3>
           <p class="text-xs text-gray-500 mb-3 italic">${esc(c)}</p>
@@ -383,10 +391,7 @@ function renderPlaybooks() {
     ${HR()}
     <h2 class="font-semibold text-gray-900 mb-4">Assessments</h2>
     <div class="grid grid-cols-2 gap-4">
-      ${[
-        { t: "Sponsorship Effectiveness Assessment", d: "Benchmark your organization's sponsorship practices against the coalition baseline." },
-        { t: "Hybrid Inclusion Audit", d: "Identify gaps in how your hybrid policy is affecting promotion and belonging." },
-      ].map(({ t, d }) => Card(`
+      ${ASSESSMENTS.map(({ t, d }) => Card(`
           <h3 class="font-medium text-gray-900 text-sm mb-1">${esc(t)}</h3>
           <p class="text-xs text-gray-500 mb-4 leading-relaxed">${esc(d)}</p>
           <div class="flex gap-2">
@@ -587,19 +592,21 @@ function renderAdvisoryMember() {
   </div>`;
 }
 
+// Module-level so the unified search index can reference it.
+const CTILEARNING_PROGRAMS = [
+  { t: "Emerging Leaders Program", d: "A structured cohort program for high-potential professionals in their first five years of leadership.", topic: "Leadership", geography: ["Global"], resourceType: "Course" },
+  { t: "ERG/BRG Leadership Certificate", d: "For leaders of employee resource groups navigating complex DEI environments.", topic: "Employee Communities", geography: ["Global"], resourceType: "Course" },
+  { t: "Sponsorship and Career Mobility", d: "Practical skills for sponsoring effectively across distance, difference, and organizational hierarchy.", topic: "Career Mobility & Opportunity", geography: ["Global"], resourceType: "Course" },
+  { t: "CTI Navigator Certificate", d: "Applied research literacy for leaders who want to use CTI data in their organizations.", topic: "Talent & Performance", geography: ["Global"], resourceType: "Course" },
+];
+
 function renderCTILearning() {
-  const programs = [
-    { t: "Emerging Leaders Program", d: "A structured cohort program for high-potential professionals in their first five years of leadership." },
-    { t: "ERG/BRG Leadership Certificate", d: "For leaders of employee resource groups navigating complex DEI environments." },
-    { t: "Sponsorship and Career Mobility", d: "Practical skills for sponsoring effectively across distance, difference, and organizational hierarchy." },
-    { t: "CTI Navigator Certificate", d: "Applied research literacy for leaders who want to use CTI data in their organizations." },
-  ];
   return `<div class="max-w-6xl mx-auto px-6 py-8">
     ${Lbl("Coalition · CTILearning")}
     <h1 class="text-2xl font-semibold text-gray-900 mt-1 mb-2">CTILearning</h1>
     <p class="text-gray-600 text-sm mb-8">Professional development for CTI members. Programs hosted on Sensa LMS.</p>
     <div class="grid grid-cols-2 gap-6 mb-10">
-      ${programs.map(({ t, d }) => Card(`
+      ${CTILEARNING_PROGRAMS.map(({ t, d }) => Card(`
           ${GrayBox({ h: "h-16", label: "Program image" })}
           <h3 class="font-semibold text-gray-900 mt-3 mb-1 text-sm">${esc(t)}</h3>
           <p class="text-xs text-gray-600 mb-4 leading-relaxed">${esc(d)}</p>

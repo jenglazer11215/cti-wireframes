@@ -529,29 +529,82 @@ function renderLab() {
   </div>`;
 }
 
+// Member version of Global Lab — same LAB_REPORTS data and filter state as
+// renderLab(), but full library access (no gated restriction) since members
+// can see everything, and no "Members Only" gating badge on cards.
+function renderResearch() {
+  const { series: seriesFilter, tag: tagFilter, geography: geoFilter, resourceType: resourceTypeFilter, query } = S.lab;
+  const seriesOptions = ["All", "Belonging", "Sponsorship"];
+  const tagOptions = ["All", "DEI Evolution", "Talent Strategy", "Leadership + Culture", "Organizational Performance"];
+  const filtered = LAB_REPORTS.filter(p => {
+    const seriesMatch = seriesFilter === "All" || p.series === seriesFilter;
+    const tagMatch = tagFilter === "All" || p.tag === tagFilter;
+    const geoMatch = geoFilter === "All" || p.geography.includes(geoFilter);
+    const resourceTypeMatch = resourceTypeFilter === "All" || p.resourceType === resourceTypeFilter;
+    const queryMatch = !query || p.title.toLowerCase().includes(query.toLowerCase());
+    return seriesMatch && tagMatch && geoMatch && resourceTypeMatch && queryMatch;
+  });
+
+  return `<div class="max-w-6xl mx-auto px-6 py-8">
+    ${Lbl("Research")}
+    <h1 class="text-2xl font-semibold text-gray-900 mt-1 mb-2">The full Coqual Global Lab library.</h1>
+    <p class="text-gray-600 text-sm mb-8">${LAB_REPORTS.length} reports available — your membership includes full access.</p>
+
+    <div class="mb-6">
+      <input id="research-search" type="text" value="${esc(query)}" oninput="setState('lab.query', this.value)" placeholder="Search research by title…" class="border border-gray-300 text-sm px-3 py-2 w-full" />
+    </div>
+
+    <div class="space-y-3 mb-6">
+      ${Filters(seriesOptions, seriesFilter, "lab.series", "Series")}
+      ${Filters(tagOptions, tagFilter, "lab.tag", "Topic")}
+      ${Filters(LAB_GEOGRAPHY_OPTIONS, geoFilter, "lab.geography", "Geography")}
+      ${Filters(LAB_RESOURCE_TYPE_OPTIONS, resourceTypeFilter, "lab.resourceType", "Resource Type")}
+    </div>
+    <p class="text-xs text-gray-400 mb-4 font-mono">Showing ${filtered.length} of ${LAB_REPORTS.length} reports</p>
+
+    <div class="grid grid-cols-3 gap-6">
+      ${filtered.map(report => `
+        <div class="border border-gray-300 p-4 bg-white cursor-pointer hover:bg-gray-50" onclick="selectReport('${esc(report.title).replace(/'/g, "\\'")}'); nav('lab-report')">
+          <div class="flex items-start justify-between mb-1">${Lbl("Research Report")}</div>
+          <h3 class="font-medium text-gray-900 mt-2 mb-1 text-sm leading-snug">${esc(report.title)}</h3>
+          <p class="text-xs text-gray-400 mb-2">${report.date}</p>
+          <div class="flex flex-wrap gap-1 mb-2">
+            ${TagEl(report.tag)}
+            ${report.series ? TagEl(report.series + " Series") : ""}
+          </div>
+          ${report.market ? `<p class="text-xs text-gray-400 leading-snug mb-1">${esc(report.market)}</p>` : ""}
+          ${report.identities ? `<p class="text-xs text-gray-400 leading-snug mb-3">${esc(report.identities)}</p>` : ""}
+          <div class="mt-3 flex gap-3 flex-wrap" onclick="event.stopPropagation()">
+            ${Btn("Key Findings →", { onclick: `selectReport('${esc(report.title).replace(/'/g, "\\'")}'); nav('lab-report')`, v: "ghost" })}
+          </div>
+        </div>`).join("")}
+    </div>
+  </div>`;
+}
+
 const CONSEQUENTIAL_POSTS = [
-  { type: "Blog Post", title: "Take Up Space Anyway", excerpt: "On the particular exhaustion of being asked to make yourself smaller — and why the antidote is not patience.", date: "Jun 25, 2026", time: "5 min", tag: "Leadership + Culture", gated: false },
-  { type: "Blog Post", title: "The Talent Was Never the Problem", excerpt: "Organizations keep redesigning their talent programs. They rarely redesign the conditions that cause talent to leave.", date: "Jun 18, 2026", time: "6 min", tag: "Talent Strategy", gated: false },
-  { type: "Blog Post", title: "Not a Monolith, But United by Common Threads", excerpt: "What happens when we stop treating communities as uniform and start designing for the patterns that actually connect them.", date: "May 31, 2026", time: "5 min", tag: "DEI Evolution", gated: false },
-  { type: "Blog Post", title: "On Being Chinese: To Eat a Culture and Promote it Too", excerpt: "Identity at work is not a performance. But organizations have made it one — and employees are paying the cost.", date: "Mar 31, 2026", time: "7 min", tag: "DEI Evolution", gated: false },
-  { type: "Blog Post", title: "What ERGs Reveal About Leadership, Trust And How Change Really Works", excerpt: "Employee resource groups are a real-time signal about how much an organization actually trusts its people.", date: "Jan 16, 2026", time: "6 min", tag: "Trust + Institutional Risk", gated: false },
-  { type: "Blog Post", title: "How To Lead In A World Of Many Minds", excerpt: "Cognitive diversity is the differentiator organizations say they want and the thing they most systematically eliminate under pressure.", date: "Nov 25, 2025", time: "5 min", tag: "Leadership + Culture", gated: false },
-  { type: "Blog Post", title: "Uncertainty Fatigue Is Replacing Change Fatigue: What It Means For Leaders", excerpt: "Change fatigue assumes there's a destination. Uncertainty fatigue is what happens when your people stop believing there is one.", date: "Oct 3, 2025", time: "6 min", tag: "Organizational Performance", gated: false },
-  { type: "Blog Post", title: "AI Is Here. The Trust Isn't.", excerpt: "Organizations are deploying AI faster than they are building the internal trust required for people to use it honestly.", date: "Aug 20, 2025", time: "7 min", tag: "AI + Work", gated: false },
-  { type: "Blog Post", title: "How to Find Your Next Big Move Before It's Obvious", excerpt: "The leaders who make consequential career moves don't wait for the opportunity to announce itself. They read the conditions first.", date: "Aug 11, 2025", time: "5 min", tag: "Talent Strategy", gated: false },
-  { type: "Blog Post", title: "The Certainty Trap: Clarity Is a Discipline, Not a Message", excerpt: "Leaders confuse certainty with clarity. One is a performance. The other is a practice. Only one survives contact with reality.", date: "Jul 10, 2025", time: "6 min", tag: "Leadership + Culture", gated: false },
-  { type: "Blog Post", title: "PRIDE Under Pressure: Notes from a Queer Millennial", excerpt: "Corporate LGBTQ+ commitments are being tested in real time. What this moment reveals about the difference between allyship and accountability.", date: "Jun 24, 2025", time: "8 min", tag: "DEI Evolution", gated: false },
-  { type: "Blog Post", title: "Juneteenth 2025: A Moment to Learn, Listen, and Lead Together", excerpt: "Organizational observance without organizational change is performance. This is the distinction that matters.", date: "Jun 19, 2025", time: "4 min", tag: "DEI Evolution", gated: false },
-  { type: "Blog Post", title: "The Leadership Paradox: What We're Asking Leaders to Hold (and How to Help Them Walk the Tightrope)", excerpt: "Leaders are being asked to be certain and humble, decisive and inclusive, resilient and human. The tightrope is getting narrower.", date: "Jun 7, 2025", time: "7 min", tag: "Leadership + Culture", gated: false },
-  { type: "Blog Post", title: "The Moment My World Stopped", excerpt: "A personal essay on grief, leadership, and what it means to return to work as someone your organization has never seen before.", date: "May 29, 2025", time: "6 min", tag: "Leadership + Culture", gated: false },
-  { type: "Blog Post", title: "If Culture Is \"Just How We Do Things Around Here,\" Then Who's Doing the Designing?", excerpt: "Culture is not organic. It is designed — by default or by intent. Most organizations are running a design they never chose.", date: "Apr 24, 2025", time: "6 min", tag: "Organizational Performance", gated: false },
-  { type: "Blog Post", title: "Mixed Messages Are Costing You Trust—Here's How to Fix It", excerpt: "When what leaders say and what they do diverge, employees do not split the difference. They default to what they observe.", date: "Mar 3, 2025", time: "5 min", tag: "Trust + Institutional Risk", gated: false },
-  { type: "Blog Post", title: "Leading Through Uncertainty: How to Bring Clarity When Everyone's Afraid", excerpt: "Clarity in uncertainty is not about having answers. It is about giving people enough to navigate the next 90 days with confidence.", date: "Feb 26, 2025", time: "6 min", tag: "Leadership + Culture", gated: false },
-  { type: "Blog Post", title: "What Actually Builds Resilient Teams? (Hint: It's Not Free Lunch and Yoga)", excerpt: "Resilience is not a perk. It is a structural property of how teams are built, led, and given permission to fail.", date: "Feb 11, 2025", time: "5 min", tag: "Organizational Performance", gated: false },
-  { type: "Blog Post", title: "Black History Month: Bringing Teams Together Through Stories", excerpt: "Story is not supplemental to organizational culture. It is how culture transmits. This month is an invitation to use it intentionally.", date: "Feb 7, 2025", time: "4 min", tag: "DEI Evolution", gated: false },
-  { type: "Blog Post", title: "Rethinking Work: The Five Questions Leaders Aren't Asking (But Should)", excerpt: "The questions organizations are not asking are more revealing than the ones they are. These five sit at the center of most leadership failures.", date: "Jan 15, 2025", time: "7 min", tag: "Future of Work", gated: false },
-  { type: "Blog Post", title: "Five Generations, One Workforce: The Untapped Superpower", excerpt: "Generational diversity is real. But the organizations treating it as a problem to manage are missing the opportunity it represents.", date: "Jan 7, 2025", time: "6 min", tag: "Workforce Design", gated: false },
-  { type: "Blog Post", title: "Robots Are People Too (Sort Of?): The Future of Inclusive Team Leadership", excerpt: "As AI agents become team members in practice, leadership will require a new grammar — one that doesn't exist yet.", date: "Nov 20, 2024", time: "5 min", tag: "AI + Work", gated: false },
+  { type: "Blog Post", title: "Take Up Space Anyway", excerpt: "On the particular exhaustion of being asked to make yourself smaller — and why the antidote is not patience.", date: "Jun 25, 2026", time: "5 min", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "The Talent Was Never the Problem", excerpt: "Organizations keep redesigning their talent programs. They rarely redesign the conditions that cause talent to leave.", date: "Jun 18, 2026", time: "6 min", tag: "Talent Strategy", topic: "Talent & Performance", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "Not a Monolith, But United by Common Threads", excerpt: "What happens when we stop treating communities as uniform and start designing for the patterns that actually connect them.", date: "May 31, 2026", time: "5 min", tag: "DEI Evolution", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "On Being Chinese: To Eat a Culture and Promote it Too", excerpt: "Identity at work is not a performance. But organizations have made it one — and employees are paying the cost.", date: "Mar 31, 2026", time: "7 min", tag: "DEI Evolution", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "What ERGs Reveal About Leadership, Trust And How Change Really Works", excerpt: "Employee resource groups are a real-time signal about how much an organization actually trusts its people.", date: "Jan 16, 2026", time: "6 min", tag: "Trust + Institutional Risk", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "How To Lead In A World Of Many Minds", excerpt: "Cognitive diversity is the differentiator organizations say they want and the thing they most systematically eliminate under pressure.", date: "Nov 25, 2025", time: "5 min", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "Uncertainty Fatigue Is Replacing Change Fatigue: What It Means For Leaders", excerpt: "Change fatigue assumes there's a destination. Uncertainty fatigue is what happens when your people stop believing there is one.", date: "Oct 3, 2025", time: "6 min", tag: "Organizational Performance", topic: "Talent & Performance", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "AI Is Here. The Trust Isn't.", excerpt: "Organizations are deploying AI faster than they are building the internal trust required for people to use it honestly.", date: "Aug 20, 2025", time: "7 min", tag: "AI + Work", topic: "AI & Workforce", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "How to Find Your Next Big Move Before It's Obvious", excerpt: "The leaders who make consequential career moves don't wait for the opportunity to announce itself. They read the conditions first.", date: "Aug 11, 2025", time: "5 min", tag: "Talent Strategy", topic: "Talent & Performance", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "The Certainty Trap: Clarity Is a Discipline, Not a Message", excerpt: "Leaders confuse certainty with clarity. One is a performance. The other is a practice. Only one survives contact with reality.", date: "Jul 10, 2025", time: "6 min", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "PRIDE Under Pressure: Notes from a Queer Millennial", excerpt: "Corporate LGBTQ+ commitments are being tested in real time. What this moment reveals about the difference between allyship and accountability.", date: "Jun 24, 2025", time: "8 min", tag: "DEI Evolution", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "Juneteenth 2025: A Moment to Learn, Listen, and Lead Together", excerpt: "Organizational observance without organizational change is performance. This is the distinction that matters.", date: "Jun 19, 2025", time: "4 min", tag: "DEI Evolution", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "The Leadership Paradox: What We're Asking Leaders to Hold (and How to Help Them Walk the Tightrope)", excerpt: "Leaders are being asked to be certain and humble, decisive and inclusive, resilient and human. The tightrope is getting narrower.", date: "Jun 7, 2025", time: "7 min", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "The Moment My World Stopped", excerpt: "A personal essay on grief, leadership, and what it means to return to work as someone your organization has never seen before.", date: "May 29, 2025", time: "6 min", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "If Culture Is \"Just How We Do Things Around Here,\" Then Who's Doing the Designing?", excerpt: "Culture is not organic. It is designed — by default or by intent. Most organizations are running a design they never chose.", date: "Apr 24, 2025", time: "6 min", tag: "Organizational Performance", topic: "Talent & Performance", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "Mixed Messages Are Costing You Trust—Here's How to Fix It", excerpt: "When what leaders say and what they do diverge, employees do not split the difference. They default to what they observe.", date: "Mar 3, 2025", time: "5 min", tag: "Trust + Institutional Risk", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "Leading Through Uncertainty: How to Bring Clarity When Everyone's Afraid", excerpt: "Clarity in uncertainty is not about having answers. It is about giving people enough to navigate the next 90 days with confidence.", date: "Feb 26, 2025", time: "6 min", tag: "Leadership + Culture", topic: "Leadership", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "What Actually Builds Resilient Teams? (Hint: It's Not Free Lunch and Yoga)", excerpt: "Resilience is not a perk. It is a structural property of how teams are built, led, and given permission to fail.", date: "Feb 11, 2025", time: "5 min", tag: "Organizational Performance", topic: "Talent & Performance", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "Black History Month: Bringing Teams Together Through Stories", excerpt: "Story is not supplemental to organizational culture. It is how culture transmits. This month is an invitation to use it intentionally.", date: "Feb 7, 2025", time: "4 min", tag: "DEI Evolution", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "Rethinking Work: The Five Questions Leaders Aren't Asking (But Should)", excerpt: "The questions organizations are not asking are more revealing than the ones they are. These five sit at the center of most leadership failures.", date: "Jan 15, 2025", time: "7 min", tag: "Future of Work", topic: "Future of Work", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "Five Generations, One Workforce: The Untapped Superpower", excerpt: "Generational diversity is real. But the organizations treating it as a problem to manage are missing the opportunity it represents.", date: "Jan 7, 2025", time: "6 min", tag: "Workforce Design", topic: "Future of Work", geography: ["Global"], resourceType: "Article", gated: false },
+  { type: "Blog Post", title: "Robots Are People Too (Sort Of?): The Future of Inclusive Team Leadership", excerpt: "As AI agents become team members in practice, leadership will require a new grammar — one that doesn't exist yet.", date: "Nov 20, 2024", time: "5 min", tag: "AI + Work", topic: "AI & Workforce", geography: ["Global"], resourceType: "Article", gated: false },
 ];
 
 function renderConsequentialArchive() {

@@ -19,6 +19,8 @@ const RENDERERS = {
   "dashboard": renderDashboard,
   "event-detail": renderEventDetail,
   "luminary-exchange": renderLuminaryExchange,
+  "luminary-exchange-member": renderLuminaryExchange,
+  "research": renderResearch,
   "forum-calendar": renderForumCalendar,
   "event-detail-member": renderEventDetailMember,
   "past-event-detail": renderPastEventDetail,

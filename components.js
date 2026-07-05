@@ -18,7 +18,7 @@ const S = {
   pastEventDetail: { tab: "synthesis" },
   eventDetailMember: { registered: false },
   luminaryExchange: { topic: "All" },
-  ui: { searchOpen: false, needHelpOpen: false },
+  ui: { searchOpen: false, needHelpOpen: false, searchQuery: "" },
   postLoginTarget: null,
 };
 
@@ -200,6 +200,7 @@ function FooterCTA() {
 function toggleSearchOpen() {
   S.ui.searchOpen = !S.ui.searchOpen;
   S.ui.needHelpOpen = false;
+  if (!S.ui.searchOpen) S.ui.searchQuery = "";
   render();
 }
 
@@ -209,19 +210,83 @@ function toggleNeedHelpOpen() {
   render();
 }
 
+// Flattens every content collection into one array of
+// { kind, title, subtitle, onclick } entries — a unified knowledge-search
+// index across Reports, Events, Courses, Playbooks, Assessments, and
+// Articles (matches the spec's result groups; no Video content exists in
+// the dataset today so that group simply never populates).
+function buildSearchIndex() {
+  const isMember = MEMBER_PAGES.includes(S.page);
+  const consequential = isMember ? CONSEQUENTIAL_MEMBER_POSTS : CONSEQUENTIAL_POSTS;
+  const eventDetailTarget = isMember ? "event-detail-member" : "event-detail";
+  const postTarget = isMember ? "post-member" : "blog-post";
+  const items = [];
+
+  LAB_REPORTS.forEach(r => items.push({
+    kind: "Reports", title: r.title, subtitle: `${r.date}${r.gated ? " · Members Only" : ""}`,
+    onclick: `selectReport('${r.title.replace(/'/g, "\\'")}'); nav('lab-report')`,
+  }));
+  FORUM_EVENTS.forEach(e => items.push({
+    kind: "Events", title: e.title, subtitle: e.date,
+    onclick: `navToEvent('${e.id}', '${eventDetailTarget}')`,
+  }));
+  CTILEARNING_PROGRAMS.forEach(c => items.push({
+    kind: "Courses", title: c.t, subtitle: "CTILearning",
+    onclick: `nav('ctilearning')`,
+  }));
+  PLAYBOOKS.forEach(p => items.push({
+    kind: "Playbooks", title: p.t, subtitle: p.fmt,
+    onclick: `nav('playbook-detail')`,
+  }));
+  ASSESSMENTS.forEach(a => items.push({
+    kind: "Assessments", title: a.t, subtitle: "Assessment",
+    onclick: `nav('playbooks')`,
+  }));
+  consequential.forEach(c => items.push({
+    kind: "Articles", title: c.title, subtitle: c.type,
+    onclick: `nav('${postTarget}')`,
+  }));
+
+  return items;
+}
+
+function SearchResults(query, dark) {
+  if (!query) return "";
+  const matches = buildSearchIndex().filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
+  if (matches.length === 0) {
+    return `<p class="text-xs font-mono ${dark ? "text-gray-500" : "text-gray-400"} mt-3">No results for "${esc(query)}"</p>`;
+  }
+  const groups = {};
+  matches.forEach(m => { (groups[m.kind] = groups[m.kind] || []).push(m); });
+  const order = ["Reports", "Events", "Courses", "Playbooks", "Assessments", "Articles"];
+  return `<div class="mt-3 grid grid-cols-3 gap-4">
+    ${order.filter(kind => groups[kind]).map(kind => `
+      <div>
+        <p class="text-xs font-mono ${dark ? "text-gray-500" : "text-gray-400"} uppercase tracking-wide mb-1.5">${kind}</p>
+        ${groups[kind].slice(0, 5).map(m => `
+          <button onclick="${m.onclick}" class="block w-full text-left text-xs ${dark ? "text-gray-300 hover:text-white" : "text-gray-700 hover:text-gray-900"} py-1 leading-snug">
+            ${esc(m.title)}
+          </button>`).join("")}
+      </div>`).join("")}
+  </div>`;
+}
+
 // Full-width bar rendered directly under the primary nav — matches the site's
 // existing pattern of stacked utility bars (breadcrumb strip, section nav,
 // anchor nav) rather than a floating dropdown, so no new CSS positioning is
-// needed. Search has no real query logic yet — placeholder input only.
+// needed.
 function SearchBar(dark) {
   if (!S.ui.searchOpen) return "";
   const barClass = dark ? "bg-gray-800 border-b border-gray-700" : "bg-gray-50 border-b border-gray-200";
   const inputClass = dark ? "bg-gray-900 border-gray-600 text-white placeholder-gray-500" : "bg-white border-gray-300 text-gray-900";
   return `<div class="${barClass} px-6 py-3">
-    <div class="max-w-6xl mx-auto flex items-center gap-3">
-      <span class="text-xs font-mono ${dark ? "text-gray-400" : "text-gray-400"}">🔍</span>
-      <input type="text" placeholder="Search research, events, courses, playbooks…" class="border ${inputClass} text-sm px-3 py-1.5 flex-1" />
-      <button onclick="toggleSearchOpen()" class="text-xs font-mono ${dark ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"}">Close</button>
+    <div class="max-w-6xl mx-auto">
+      <div class="flex items-center gap-3">
+        <span class="text-xs font-mono ${dark ? "text-gray-400" : "text-gray-400"}">🔍</span>
+        <input id="global-search" type="text" value="${esc(S.ui.searchQuery)}" oninput="setState('ui.searchQuery', this.value)" placeholder="Search research, events, courses, playbooks…" class="border ${inputClass} text-sm px-3 py-1.5 flex-1" />
+        <button onclick="toggleSearchOpen()" class="text-xs font-mono ${dark ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"}">Close</button>
+      </div>
+      ${SearchResults(S.ui.searchQuery, dark)}
     </div>
   </div>`;
 }
@@ -272,7 +337,7 @@ function PublicNav(page) {
 
 function MemberNav(page) {
   const items = [
-    ["Home", "dashboard"], ["Global Lab", "lab"], ["Luminary Exchange", "luminary-exchange"],
+    ["Home", "dashboard"], ["Global Lab", "research"], ["Luminary Exchange", "luminary-exchange-member"],
     ["The Forum", "forum-calendar"], ["Consequential", "consequential-member"], ["My Membership", "my-membership"],
   ];
   return `<nav class="border-b border-gray-700 bg-gray-900 sticky top-0 z-50">
