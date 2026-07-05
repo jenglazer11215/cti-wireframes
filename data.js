@@ -536,3 +536,25 @@ const MEMBER_PAGES = [
   "ctilearning", "member-directory", "my-membership",
   "research", "luminary-exchange-member",
 ];
+
+// Real published Summit session videos (source: Summit Videos Archive,
+// WordPress published-pages export). topic/geography/resourceType are
+// added metadata for the taxonomy/search system, not in the source doc.
+const SUMMIT_VIDEOS = [
+  { title: "Carrying the Torch: A Fireside Chat Between Phylicia Rashad & Soledad O’Brien", summit: "Summit 2024", published: "Nov 19, 2024", topic: "Leadership", geography: ["Global"], resourceType: "Video" },
+  { title: "EPIC! Players Opening Performance", summit: "Summit 2024", published: "Nov 19, 2024", topic: "Leadership", geography: ["Global"], resourceType: "Video" },
+  { title: "History & Stories to Light Our Way", summit: "Summit 2025", published: "Dec 2, 2025", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Video" },
+  { title: "Inclusion 2.0", summit: "Summit 2025", published: "Dec 2, 2025", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Video" },
+  { title: "Is AI Cheating? Women, Work, & the Next Wave of Leadership", summit: "Summit 2025", published: "Dec 10, 2025", topic: "AI & Workforce", geography: ["Global"], resourceType: "Video" },
+  { title: "LGBTQ+ Research Report Preview and Conversation", summit: "Summit 2024", published: "Nov 19, 2024", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Video" },
+  { title: "Navigating Risk with Purpose: A Conversation Between CDOs and Legal Experts", summit: "Summit 2024", published: "Nov 20, 2024", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Video" },
+  { title: "Rethinking Assumptions in an Age of Demographic Change", summit: "Summit 2025", published: "Dec 2, 2025", topic: "Future of Work", geography: ["Global"], resourceType: "Video" },
+  { title: "Social Mobility: A Roadmap to Inclusion & Innovation", summit: "Summit 2024", published: "Nov 21, 2024", topic: "Career Mobility & Opportunity", geography: ["Global"], resourceType: "Video" },
+  { title: "The Beauty of Belonging: A Fireside Chat with Marilu Marshall", summit: "Summit 2024", published: "Nov 21, 2024", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Video" },
+  { title: "The DEIB Paradigm Shift: Traction for the Future", summit: "Summit 2024", published: "Nov 19, 2024", topic: "Organizational Culture & Trust", geography: ["Global"], resourceType: "Video" },
+  { title: "The Leadership We Need Now", summit: "Summit 2025", published: "Dec 2, 2025", topic: "Leadership", geography: ["Global"], resourceType: "Video" },
+  { title: "The Power and Impact of Sponsorship in Corporate America", summit: "Summit 2024", published: "Nov 19, 2024", topic: "Career Mobility & Opportunity", geography: ["Global"], resourceType: "Video" },
+  { title: "The Power of Possible: Negotiating Clarity in Uncertain Times", summit: "Summit 2025", published: "Dec 2, 2025", topic: "Leadership", geography: ["Global"], resourceType: "Video" },
+  { title: "We are the Leaders We Have Been Looking For: A Fireside Chat with Eddie S. Glaude", summit: "Summit 2024", published: "Nov 19, 2024", topic: "Leadership", geography: ["Global"], resourceType: "Video" },
+  { title: "What Breaks Leaders – and What Saves Them", summit: "Summit 2025", published: "Dec 2, 2025", topic: "Leadership", geography: ["Global"], resourceType: "Video" },
+];

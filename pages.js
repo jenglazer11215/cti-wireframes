@@ -318,6 +318,21 @@ function renderSummit() {
         <p class="text-sm text-gray-600 mb-4">Summit attendance is a member benefit. Full agenda, registration, and pre-reads are available in the member area.</p>
         ${Btn("Request a Membership Conversation", { onclick: "nav('request-form')", v: "solid" })}
       </div>
+
+      ${HR()}
+
+      <h2 class="font-semibold text-gray-900 mb-2">Summit Video Archive</h2>
+      <p class="text-sm text-gray-500 mb-6">Session recordings from past Summits — ${SUMMIT_VIDEOS.length} published videos.</p>
+      <div class="space-y-2">
+        ${SUMMIT_VIDEOS.map(v => `
+          <div class="flex items-center gap-3 border border-gray-200 p-3 hover:bg-gray-50 cursor-pointer">
+            <div class="w-8 h-8 bg-gray-200 flex items-center justify-center flex-shrink-0"><span class="text-gray-400 text-xs">▶</span></div>
+            <div class="flex-1 min-w-0">
+              <span class="text-sm text-gray-800">${esc(v.title)}</span>
+            </div>
+            ${TagEl(v.summit)}
+          </div>`).join("")}
+      </div>
     </div>
     </div>`;
 }
@@ -1414,6 +1429,20 @@ function renderEventDetail() {
         </div>
 
         <div class="mb-8">
+          <h2 class="font-semibold text-gray-900 mb-3 text-sm">Session times by region</h2>
+          <p class="text-xs text-gray-500 mb-3">CTI is a global coalition — every session is scheduled with four time zones in mind.</p>
+          <div class="grid grid-cols-2 gap-2">
+            ${[
+              ["New York", event.timeNYC], ["London", event.timeLondon], ["Germany", event.timeGermany], ["Mumbai", event.timeMumbai],
+            ].map(([city, time]) => `
+              <div class="flex items-center gap-3 border border-gray-200 px-3 py-2">
+                <span class="text-xs font-mono text-gray-400 w-20 flex-shrink-0">${city}</span>
+                <span class="text-sm text-gray-800">${event.date} · ${time}</span>
+              </div>`).join("")}
+          </div>
+        </div>
+
+        <div class="mb-8">
           <h2 class="font-semibold text-gray-900 mb-4 text-sm">Speakers &amp; Facilitators</h2>
           <div class="grid grid-cols-2 gap-4">
             ${event.speakers.map(({ name, role }) => `
@@ -1477,7 +1506,7 @@ function renderEventDetail() {
           <h3 class="font-semibold text-gray-900 mb-1 text-sm">Event Details</h3>
           <div class="space-y-2 my-4 text-sm text-gray-700">
             ${[
-              ["DATE", event.date], ["TIME", event.timeNYC], ["FORMAT", event.format],
+              ["DATE", event.date], ["TIME (NYC)", event.timeNYC], ["FORMAT", event.format],
               ["ACCESS", event.access], ["LOCATION", event.location],
             ].map(([label, val]) => `
               <div class="flex gap-2"><span class="text-gray-400 w-16 flex-shrink-0 font-mono text-xs pt-0.5">${label}</span><span>${esc(val)}</span></div>`).join("")}

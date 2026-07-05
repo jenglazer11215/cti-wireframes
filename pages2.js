@@ -772,7 +772,7 @@ function renderEventDetailMember() {
         <div class="border-2 border-gray-900 p-5">
           <div class="text-sm text-gray-700 space-y-2 mb-5">
             ${[
-              ["DATE", event.date], ["TIME", event.timeNYC], ["FORMAT", event.format], ["ACCESS", event.access], ["LOCATION", event.location],
+              ["DATE", event.date], ["TIME (NYC)", event.timeNYC], ["FORMAT", event.format], ["ACCESS", event.access], ["LOCATION", event.location],
             ].map(([label, val]) => `
               <div class="flex gap-2">
                 <span class="text-gray-400 w-16 flex-shrink-0 font-mono text-xs pt-0.5">${label}</span>

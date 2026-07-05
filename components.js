@@ -246,6 +246,10 @@ function buildSearchIndex() {
     kind: "Articles", title: c.title, subtitle: c.type,
     onclick: `nav('${postTarget}')`,
   }));
+  SUMMIT_VIDEOS.forEach(v => items.push({
+    kind: "Videos", title: v.title, subtitle: v.summit,
+    onclick: `nav('summit')`,
+  }));
 
   return items;
 }
@@ -258,7 +262,7 @@ function SearchResults(query, dark) {
   }
   const groups = {};
   matches.forEach(m => { (groups[m.kind] = groups[m.kind] || []).push(m); });
-  const order = ["Reports", "Events", "Courses", "Playbooks", "Assessments", "Articles"];
+  const order = ["Reports", "Events", "Courses", "Playbooks", "Assessments", "Articles", "Videos"];
   return `<div class="mt-3 grid grid-cols-3 gap-4">
     ${order.filter(kind => groups[kind]).map(kind => `
       <div>
@@ -307,12 +311,14 @@ function RelatedContent(topic, { excludeTitle = null, isMember = false, includeA
   const course = isMember ? CTILEARNING_PROGRAMS.find(c => c.topic === topic) : null;
   const learning = playbook || course;
   const article = consequential.find(c => c.title !== excludeTitle && c.topic === topic);
+  const video = SUMMIT_VIDEOS.find(v => v.topic === topic);
 
   const blocks = [];
   if (report) blocks.push({ label: "Related Research", title: report.title, onclick: `selectReport('${report.title.replace(/'/g, "\\'")}'); nav('lab-report')` });
   if (event) blocks.push({ label: "Related Forum Event", title: event.title, onclick: `navToEvent('${event.id}', '${eventTarget}')` });
   if (learning) blocks.push({ label: "Related Learning", title: learning.t, onclick: playbook ? "nav('playbook-detail')" : "nav('ctilearning')" });
   if (article) blocks.push({ label: "Related Consequential", title: article.title, onclick: `nav('${postTarget}')` });
+  if (video) blocks.push({ label: "Related Video", title: video.title, onclick: "nav('summit')" });
 
   const advisoryTarget = isMember ? "advisory-member" : null;
   return `<div class="space-y-4">
