@@ -291,6 +291,45 @@ function SearchBar(dark) {
   </div>`;
 }
 
+// Every major piece of content should surface related content from across
+// the CTI ecosystem (Research → Related Forum Events → Related Learning →
+// Related Consequential → Related Advisory). Computed dynamically off the
+// shared `topic` taxonomy field added in the last pass, instead of the
+// one-off hardcoded single links that used to sit on these pages.
+function RelatedContent(topic, { excludeTitle = null, isMember = false, includeAdvisory = true } = {}) {
+  const eventTarget = isMember ? "event-detail-member" : "event-detail";
+  const postTarget = isMember ? "post-member" : "blog-post";
+  const consequential = isMember ? CONSEQUENTIAL_MEMBER_POSTS : CONSEQUENTIAL_POSTS;
+
+  const event = FORUM_EVENTS.find(e => e.topic === topic && !e.past);
+  const report = LAB_REPORTS.find(r => r.topic === topic && r.title !== excludeTitle);
+  const playbook = isMember ? PLAYBOOKS.find(p => p.topic === topic) : null;
+  const course = isMember ? CTILEARNING_PROGRAMS.find(c => c.topic === topic) : null;
+  const learning = playbook || course;
+  const article = consequential.find(c => c.title !== excludeTitle && c.topic === topic);
+
+  const blocks = [];
+  if (report) blocks.push({ label: "Related Research", title: report.title, onclick: `selectReport('${report.title.replace(/'/g, "\\'")}'); nav('lab-report')` });
+  if (event) blocks.push({ label: "Related Forum Event", title: event.title, onclick: `navToEvent('${event.id}', '${eventTarget}')` });
+  if (learning) blocks.push({ label: "Related Learning", title: learning.t, onclick: playbook ? "nav('playbook-detail')" : "nav('ctilearning')" });
+  if (article) blocks.push({ label: "Related Consequential", title: article.title, onclick: `nav('${postTarget}')` });
+
+  const advisoryTarget = isMember ? "advisory-member" : null;
+  return `<div class="space-y-4">
+    ${blocks.map(b => Card(`
+        ${Lbl(b.label)}
+        <p class="text-sm font-medium text-gray-900 mt-1 mb-2 leading-snug">${esc(b.title)}</p>
+        ${Btn("View →", { onclick: b.onclick, v: "ghost" })}
+      `, { onclick: b.onclick })).join("")}
+    ${includeAdvisory ? `
+      <div class="bg-gray-900 text-white p-4">
+        <p class="text-sm font-medium mb-2">Related Advisory</p>
+        <p class="text-xs text-gray-400 mb-3">CTI can bring this topic to your organization through an advisory conversation.</p>
+        <button onclick="${advisoryTarget ? `nav('${advisoryTarget}')` : "navEngage('advisory')"}" class="text-xs font-mono border border-gray-600 text-gray-300 px-3 py-2 hover:border-white hover:text-white w-full">Request Advisory</button>
+      </div>` : ""}
+  </div>`;
+}
+
 function NeedHelpBar() {
   if (!S.ui.needHelpOpen) return "";
   const items = [

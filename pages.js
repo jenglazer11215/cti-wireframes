@@ -442,6 +442,11 @@ function renderLabReport() {
                   <p class="text-xs text-gray-400">${r.date}</p>
                 </div>`).join("")}
             </div>` : ""}
+
+          <div>
+            <p class="text-xs font-mono uppercase tracking-widest text-gray-400 mb-3">From the CTI ecosystem</p>
+            ${RelatedContent(report.topic, { excludeTitle: report.title, isMember: false, includeAdvisory: false })}
+          </div>
         </div>
       </div>
     </div>
@@ -686,37 +691,8 @@ function renderBlogPost() {
       <p>The entry-level analyst who once spent three years learning to read a room, manage a client expectation, and hold a position under pressure is now spending those years managing AI outputs. That is different work. It develops different instincts.</p>
     </div>
     ${HR()}
-    <div class="mb-6">
-      <h3 class="font-semibold text-gray-900 mb-4 text-sm">Related Research</h3>
-      ${["Sponsorship in the Age of Distributed Work", "AI and the Disappearing Apprenticeship Model"].map(r => `
-        <div onclick="nav('lab')" class="flex items-center gap-3 border border-gray-200 p-3 cursor-pointer hover:bg-gray-50 mb-2">
-          <span class="text-xs text-gray-400 font-mono">RESEARCH</span>
-          <span class="text-sm text-gray-800">${esc(r)}</span>
-        </div>`).join("")}
-    </div>
-    <div class="mb-6">
-      <h3 class="font-semibold text-gray-900 mb-3 text-sm">Related Forum Session</h3>
-      ${Card(`
-        ${Lbl("Upcoming · September 18, 2025")}
-        <p class="font-medium text-gray-900 mt-1 mb-2 text-sm">The Judgment Gap: AI and Early Career Learning</p>
-        ${Btn("See The Forum →", { onclick: "nav('forum-public')", v: "ghost" })}
-      `, { onclick: "nav('forum-public')" })}
-    </div>
-    <div class="mb-10">
-      <h3 class="font-semibold text-gray-900 mb-3 text-sm">Related Playbook</h3>
-      ${Card(`
-        <div class="flex items-start justify-between">
-          <div>
-            ${Lbl("Playbook · Members Only")}
-            <p class="font-medium text-gray-900 mt-1 text-sm">Building Judgment in AI-Augmented Teams</p>
-            <p class="text-xs text-gray-500 mt-1">Available in the member area</p>
-          </div>
-          <span class="text-gray-400">🔒</span>
-        </div>
-        <div class="mt-3">${Btn("Request Membership →", { onclick: "nav('request-form')", v: "ghost" })}</div>
-      `, { onclick: "nav('request-form')" })}
-    </div>
-    <div class="bg-gray-900 text-white p-8 text-center">
+    ${RelatedContent("AI & Workforce", { isMember: false, includeAdvisory: false })}
+    <div class="bg-gray-900 text-white p-8 text-center mt-8">
       <h3 class="font-semibold mb-2">Bring this conversation to your organization.</h3>
       <p class="text-gray-400 text-sm mb-6">CTI is available for executive briefings, leadership retreats, and board presentations on this and related topics.</p>
       ${Btn("Start a Conversation", { onclick: "nav('request-form')", v: "solid" })}
@@ -1526,17 +1502,7 @@ function renderEventDetail() {
           </div>
         </div>
 
-        ${Card(`
-          ${Lbl("Related Consequential")}
-          <p class="text-sm text-gray-800 mt-1 mb-2 leading-snug">What happens when entry-level work stops teaching judgment?</p>
-          ${Btn("Read →", { onclick: "nav('blog-post')", v: "ghost" })}
-        `)}
-
-        ${Card(`
-          ${Lbl("Related Research")}
-          <p class="text-sm text-gray-800 mt-1 mb-2 leading-snug">AI and the Disappearing Apprenticeship Model</p>
-          ${Btn("View →", { onclick: "nav('lab')", v: "ghost" })}
-        `, { onclick: "nav('lab')" })}
+        ${RelatedContent(event.topic, { isMember: false })}
       </div>
     </div>
   </div>`;

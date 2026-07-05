@@ -339,18 +339,7 @@ function renderPostMember() {
       <p>The coalition spent three sessions on this question in 2025. What emerged was a concern that most CHROs had been circling without naming: the apprenticeship model is being disrupted from the bottom up.</p>
     </div>
     ${HR()}
-    <div class="space-y-4">
-      ${Card(`
-        ${Lbl("Related Forum Session")}
-        <p class="text-sm font-medium text-gray-900 mt-1 mb-2">The Judgment Gap: AI and Early Career Learning</p>
-        ${Btn("View Session →", { onclick: "nav('session-after')", v: "ghost" })}
-      `, { onclick: "nav('session-after')" })}
-      ${Card(`
-        ${Lbl("Related Playbook")}
-        <p class="text-sm font-medium text-gray-900 mt-1 mb-2">Building Judgment in AI-Augmented Teams</p>
-        ${Btn("Open Playbook →", { onclick: "nav('playbook-detail')", v: "ghost" })}
-      `, { onclick: "nav('playbook-detail')" })}
-    </div>
+    ${RelatedContent("AI & Workforce", { isMember: true, includeAdvisory: false })}
     <div class="bg-gray-900 text-white p-6 mt-8 text-center">
       <p class="font-medium mb-2 text-sm">Bring this to The Forum.</p>
       <p class="text-gray-400 text-xs mb-4">Raise this challenge in the next session intake.</p>
@@ -427,14 +416,6 @@ function renderPlaybookDetail() {
           ${["Where do your sponsorship relationships depend on in-person visibility?", "What would structured remote sponsorship look like in your organization?"].map(q => `
             <div class="border-l-2 border-gray-300 pl-3 mb-3"><p class="text-sm text-gray-600 italic">${esc(q)}</p></div>`).join("")}
         </div>
-        <div>
-          <h2 class="font-semibold text-gray-900 mb-3 text-sm">Related Research</h2>
-          ${["Sponsorship in the Age of Distributed Work", "The Sponsorship Proximity Problem · Forum Synthesis"].map(r => `
-            <div onclick="nav('post-member')" class="flex items-center gap-3 border border-gray-200 p-3 cursor-pointer hover:bg-gray-50 mb-2">
-              <span class="text-xs text-gray-400 font-mono">RESEARCH</span>
-              <span class="text-sm text-gray-800">${esc(r)}</span>
-            </div>`).join("")}
-        </div>
       </div>
       <div class="space-y-4">
         <div class="border border-gray-300 p-4">
@@ -442,16 +423,7 @@ function renderPlaybookDetail() {
           ${GrayBox({ h: "h-24", label: "Playbook preview" })}
           <div class="mt-3 space-y-2">${Btn("Download PDF", { v: "solid" })}${Btn("Read Inline", {})}</div>
         </div>
-        ${Card(`
-          ${Lbl("Related Forum Session")}
-          <p class="text-sm font-medium text-gray-900 mt-1 mb-2">The Sponsorship Proximity Problem</p>
-          ${Btn("View Session →", { onclick: "nav('session-after')", v: "ghost" })}
-        `, { onclick: "nav('session-after')" })}
-        <div class="bg-gray-900 text-white p-4">
-          <p class="text-sm font-medium mb-2">Use this with your team.</p>
-          <p class="text-xs text-gray-400 mb-3">CTI can facilitate a team workshop using this framework.</p>
-          <button onclick="nav('advisory-member')" class="text-xs font-mono border border-gray-600 text-gray-300 px-3 py-2 hover:border-white hover:text-white w-full">Request Advisory</button>
-        </div>
+        ${RelatedContent(PLAYBOOKS[0].topic, { isMember: true })}
       </div>
     </div>
   </div>`;
@@ -835,23 +807,7 @@ function renderEventDetailMember() {
           </div>
         </div>
 
-        ${Card(`
-          ${Lbl("Related Consequential")}
-          <p class="text-sm text-gray-800 mt-1 mb-2 leading-snug">Latest thinking on ${esc(event.tag)}</p>
-          ${Btn("Read →", { onclick: "nav('post-member')", v: "ghost" })}
-        `, { onclick: "nav('post-member')" })}
-
-        ${Card(`
-          ${Lbl("Related Playbook")}
-          <p class="text-sm text-gray-800 mt-1 mb-2 leading-snug">CTI Playbook on ${esc(event.tag)}</p>
-          ${Btn("Open →", { onclick: "nav('playbook-detail')", v: "ghost" })}
-        `, { onclick: "nav('playbook-detail')" })}
-
-        <div class="bg-gray-900 text-white p-4">
-          <p class="text-sm font-medium mb-2">Bring this to your organization.</p>
-          <p class="text-xs text-gray-400 mb-3">Request a company-wide session on this topic.</p>
-          <button onclick="nav('advisory-member')" class="text-xs font-mono border border-gray-600 text-gray-300 px-3 py-2 hover:border-white hover:text-white w-full">Request Advisory</button>
-        </div>
+        ${RelatedContent(event.topic, { isMember: true })}
       </div>
     </div>
   </div>`;
@@ -1010,23 +966,7 @@ function renderPastEventDetail() {
           </div>
         </div>
 
-        ${Card(`
-          ${Lbl("Playbook from this session")}
-          <p class="text-sm font-medium text-gray-900 mt-1 mb-2">Distributed Sponsorship Framework</p>
-          ${Btn("Open Playbook", { onclick: "nav('playbook-detail')" })}
-        `, { onclick: "nav('playbook-detail')" })}
-
-        ${Card(`
-          ${Lbl("Related Consequential")}
-          <p class="text-sm font-medium text-gray-900 mt-1 mb-2">The Hidden Cost of Hybrid Rollbacks</p>
-          ${Btn("Read →", { onclick: "nav('post-member')", v: "ghost" })}
-        `, { onclick: "nav('post-member')" })}
-
-        <div class="bg-gray-900 text-white p-4">
-          <p class="text-sm font-medium mb-2">Bring this to your organization.</p>
-          <p class="text-xs text-gray-400 mb-3">Request a workshop on distributed sponsorship for your leadership team.</p>
-          <button onclick="nav('advisory-member')" class="text-xs font-mono border border-gray-600 text-gray-300 px-3 py-2 hover:border-white hover:text-white w-full">Request Advisory</button>
-        </div>
+        ${RelatedContent("Talent & Performance", { isMember: true })}
       </div>
     </div>
   </div>`;
