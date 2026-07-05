@@ -13,6 +13,7 @@ const RENDERERS = {
   "media-kit": renderMediaKit,
   "partnership-prospectus": renderPartnershipProspectus,
   "executive-briefing-request": renderExecutiveBriefingRequest,
+  "member-login": renderMemberLogin,
   "request-form": renderRequestForm,
   "thank-you": renderThankYou,
   "dashboard": renderDashboard,
@@ -41,6 +42,15 @@ function render() {
   const isMember = MEMBER_PAGES.includes(page);
   const renderer = RENDERERS[page] || renderHome;
 
+  // Preserve focus + cursor position across re-renders — the whole #root
+  // subtree gets recreated on every render(), which would otherwise drop
+  // focus out of any text input (e.g. the Global Lab search box) after
+  // every keystroke.
+  const active = document.activeElement;
+  const activeId = active && active.id;
+  const selStart = active && "selectionStart" in active ? active.selectionStart : null;
+  const selEnd = active && "selectionEnd" in active ? active.selectionEnd : null;
+
   const html = `
     ${isMember ? MemberNav(page) : PublicNav(page)}
     <div class="border-b border-gray-200 bg-gray-50 px-6 py-1.5">
@@ -54,6 +64,16 @@ function render() {
   `;
 
   document.getElementById("root").innerHTML = `<div class="min-h-screen bg-white">${html}</div>`;
+
+  if (activeId) {
+    const el = document.getElementById(activeId);
+    if (el) {
+      el.focus();
+      if (selStart != null && el.setSelectionRange) {
+        try { el.setSelectionRange(selStart, selEnd); } catch (e) {}
+      }
+    }
+  }
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────

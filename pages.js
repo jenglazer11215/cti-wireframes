@@ -33,6 +33,23 @@ function renderHome() {
     </section>
 
     <section class="max-w-6xl mx-auto px-6 py-12">
+      ${Lbl("The CTI Ecosystem")}
+      <h2 class="font-semibold text-gray-900 mt-2 mb-6 text-2xl">Four ways CTI works on your behalf.</h2>
+      <div class="grid grid-cols-4 gap-5">
+        ${[
+          { label: "Coqual Global Lab", body: "Research at the frontier of work, talent, and leadership.", page: "lab" },
+          { label: "The Forum", body: "CTI's executive convening program — bring your real challenge, leave with clearer thinking.", page: "forum-public" },
+          { label: "Consequential", body: "Signal briefings, research reports, horizon scans, and commentary from the CTI network.", page: "consequential-archive" },
+          { label: "Luminary Exchange", body: "Practitioner scholars and senior advisors available for thought partnership.", page: "luminary-exchange" },
+        ].map(({ label, body, page }) => Card(`
+            <h3 class="font-semibold text-gray-900 mb-2 text-sm">${esc(label)}</h3>
+            <p class="text-xs text-gray-600 mb-4 leading-relaxed">${esc(body)}</p>
+            ${Btn("Explore →", { onclick: `nav('${page}')`, v: "ghost" })}
+          `, { onclick: `nav('${page}')` })).join("")}
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-12">
       <p class="text-xs font-mono uppercase tracking-widest text-gray-500 mb-6">What the coalition is focused on</p>
       <div class="grid grid-cols-3 gap-6">
         ${[
@@ -107,6 +124,11 @@ function renderHome() {
             ${Btn("View Profile →", { onclick: "nav('request-form')", v: "ghost" })}
           `, { onclick: "nav('request-form')" })).join("")}
       </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-12 text-center">
+      <p class="text-sm text-gray-600 mb-3">Working through a live challenge? Talk to CTI directly.</p>
+      ${Btn("Start an Advisory Conversation →", { onclick: "navEngage('advisory')", v: "ghost" })}
     </section>
 
     ${FooterCTA()}
@@ -218,7 +240,7 @@ function renderForumPublic() {
               </div>
               <div class="flex-shrink-0 flex items-center gap-2" onclick="event.stopPropagation()">
                 ${Btn("View", { onclick: `navToEvent('${e.id}', 'event-detail')`, v: "outline" })}
-                <button onclick="nav('dashboard')" class="bg-gray-900 text-white text-xs font-mono px-4 py-1.5 hover:bg-gray-700">
+                <button onclick="loginAndRegister('${e.id}')" class="bg-gray-900 text-white text-xs font-mono px-4 py-1.5 hover:bg-gray-700">
                   🔒 Login to Register
                 </button>
               </div>
@@ -426,15 +448,21 @@ function renderLabReport() {
   </div>`;
 }
 
+const LAB_GEOGRAPHY_OPTIONS = ["All", "Global", "United States", "United Kingdom", "Germany", "India", "Brazil", "Japan", "Canada", "Australia", "China", "France", "Hong Kong", "Mexico", "Russia", "Singapore", "South Africa", "Turkey", "UAE"];
+const LAB_RESOURCE_TYPE_OPTIONS = ["All", "Research Report", "Executive Brief", "Playbook", "Assessment", "Toolkit", "Webinar Recording", "Video", "Course", "Article", "Infographic"];
+
 function renderLab() {
-  const { series: seriesFilter, tag: tagFilter } = S.lab;
+  const { series: seriesFilter, tag: tagFilter, geography: geoFilter, resourceType: resourceTypeFilter, query } = S.lab;
   const seriesOptions = ["All", "Belonging", "Sponsorship"];
   const tagOptions = ["All", "DEI Evolution", "Talent Strategy", "Leadership + Culture", "Organizational Performance"];
   const publicReports = LAB_REPORTS.filter(r => !r.gated);
   const filtered = publicReports.filter(p => {
     const seriesMatch = seriesFilter === "All" || p.series === seriesFilter;
     const tagMatch = tagFilter === "All" || p.tag === tagFilter;
-    return seriesMatch && tagMatch;
+    const geoMatch = geoFilter === "All" || p.geography.includes(geoFilter);
+    const resourceTypeMatch = resourceTypeFilter === "All" || p.resourceType === resourceTypeFilter;
+    const queryMatch = !query || p.title.toLowerCase().includes(query.toLowerCase());
+    return seriesMatch && tagMatch && geoMatch && resourceTypeMatch && queryMatch;
   });
   const featured = LAB_REPORTS[0];
 
@@ -468,9 +496,15 @@ function renderLab() {
         ${GrayBox({ label: "Report cover" })}
       </div>
 
+      <div class="mb-6">
+        <input id="lab-search" type="text" value="${esc(query)}" oninput="setState('lab.query', this.value)" placeholder="Search research by title…" class="border border-gray-300 text-sm px-3 py-2 w-full" />
+      </div>
+
       <div class="space-y-3 mb-6">
         ${Filters(seriesOptions, seriesFilter, "lab.series", "Series")}
         ${Filters(tagOptions, tagFilter, "lab.tag", "Topic")}
+        ${Filters(LAB_GEOGRAPHY_OPTIONS, geoFilter, "lab.geography", "Geography")}
+        ${Filters(LAB_RESOURCE_TYPE_OPTIONS, resourceTypeFilter, "lab.resourceType", "Resource Type")}
       </div>
       <p class="text-xs text-gray-400 mb-4 font-mono">Showing ${filtered.length} of ${publicReports.length} available reports</p>
 
@@ -1299,6 +1333,19 @@ function renderRequestForm() {
   </div>`;
 }
 
+function renderMemberLogin() {
+  return `<div class="max-w-sm mx-auto px-6 py-24">
+    ${Lbl("CTI Members")}
+    <h1 class="text-2xl font-semibold text-gray-900 mt-3 mb-8">Log in to your account.</h1>
+    <div class="space-y-4">
+      ${Field("Email")}
+      ${Field("Password")}
+      ${Btn("Log In", { onclick: "completeLogin()", v: "solid", extraClass: "w-full text-center" })}
+    </div>
+    <p class="text-xs text-gray-500 mt-6">Not a member? ${`<button onclick="nav('request-form')" class="underline text-gray-700">Request a Membership Conversation</button>`}</p>
+  </div>`;
+}
+
 function renderThankYou() {
   return `<div class="max-w-2xl mx-auto px-6 py-24 text-center">
     <div class="w-12 h-12 border border-gray-400 mx-auto mb-8 flex items-center justify-center">
@@ -1408,7 +1455,7 @@ function renderEventDetail() {
           </div>
           ${HR()}
           <div class="space-y-2">
-            <button onclick="nav('dashboard')" class="w-full bg-gray-900 text-white text-sm font-mono py-3 hover:bg-gray-700">
+            <button onclick="loginAndRegister('${event.id}')" class="w-full bg-gray-900 text-white text-sm font-mono py-3 hover:bg-gray-700">
               Login to Register
             </button>
             <p class="text-xs text-gray-500 pt-1">Not a member?</p>

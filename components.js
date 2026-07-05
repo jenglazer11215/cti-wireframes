@@ -9,7 +9,7 @@ const S = {
   selectedEventId: null, // set in app.js after FORUM_EVENTS loads
   selectedReportTitle: null, // set in app.js after LAB_REPORTS loads
   forumPublic: { filter: "All" },
-  lab: { series: "All", tag: "All" },
+  lab: { series: "All", tag: "All", geography: "All", resourceType: "All", query: "" },
   consequentialArchive: { type: "All", topic: "All" },
   engage: { tab: "membership", openFaq: null, openForm: null, selectedNeeds: [] },
   advisoryMember: { openForm: null },
@@ -19,6 +19,7 @@ const S = {
   eventDetailMember: { registered: false },
   luminaryExchange: { topic: "All" },
   ui: { searchOpen: false, needHelpOpen: false },
+  postLoginTarget: null,
 };
 
 function esc(str) {
@@ -43,6 +44,22 @@ function navEngage(tab) {
 
 function navToEvent(eventId, target) {
   S.selectedEventId = eventId;
+  nav(target);
+}
+
+// Simulates "Register" on a public event requiring member login: stash which
+// event the user was trying to register for, send them through a login step,
+// and land back on that same event's member registration page — instead of
+// dumping them on the generic dashboard with no memory of what they wanted.
+function loginAndRegister(eventId) {
+  S.selectedEventId = eventId;
+  S.postLoginTarget = "event-detail-member";
+  nav("member-login");
+}
+
+function completeLogin() {
+  const target = S.postLoginTarget || "dashboard";
+  S.postLoginTarget = null;
   nav(target);
 }
 
