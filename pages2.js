@@ -592,7 +592,7 @@ function renderCTILearning() {
     { t: "Emerging Leaders Program", d: "A structured cohort program for high-potential professionals in their first five years of leadership." },
     { t: "ERG/BRG Leadership Certificate", d: "For leaders of employee resource groups navigating complex DEI environments." },
     { t: "Sponsorship and Career Mobility", d: "Practical skills for sponsoring effectively across distance, difference, and organizational hierarchy." },
-    { t: "Coqual Navigator Certificate", d: "Applied research literacy for leaders who want to use CTI data in their organizations." },
+    { t: "CTI Navigator Certificate", d: "Applied research literacy for leaders who want to use CTI data in their organizations." },
   ];
   return `<div class="max-w-6xl mx-auto px-6 py-8">
     ${Lbl("Coalition · CTILearning")}
@@ -695,6 +695,22 @@ function renderMyMembership() {
         ${Card(`${Lbl("Support")}<p class="text-sm text-gray-600 mt-2 mb-3 leading-relaxed">Questions about your membership? Contact the CTI team.</p>${Btn("Contact Support", { v: "solid" })}`)}
         ${Card(`${Lbl("Upgrade")}<p class="text-sm text-gray-600 mt-2 mb-3 leading-relaxed">Interested in Co-Chair membership? Start a conversation.</p>${Btn("Request Conversation", { onclick: "nav('request-form')" })}`)}
       </div>
+    </div>
+
+    ${HR()}
+    <h2 class="font-semibold text-gray-900 mb-4 text-sm">Coalition &amp; Resources</h2>
+    <div class="grid grid-cols-3 gap-3">
+      ${[
+        { t: "Coalition Home", d: "Member directory, Luminary Exchange, Advisory, and CTILearning.", page: "coalition" },
+        { t: "Playbooks", d: "Frameworks, guides, and assessments.", page: "playbooks" },
+        { t: "Member Directory", d: "Connect with peers across the coalition.", page: "member-directory" },
+        { t: "Luminary Exchange", d: "Browse practitioner scholars and advisors.", page: "luminary-archive" },
+        { t: "Advisory", d: "Request decision support or speaker booking.", page: "advisory-member" },
+        { t: "CTILearning", d: "Professional development programs.", page: "ctilearning" },
+      ].map(({ t, d, page }) => Card(`
+          <h3 class="font-medium text-gray-900 text-sm mb-1">${esc(t)}</h3>
+          <p class="text-xs text-gray-500 leading-relaxed">${esc(d)}</p>
+        `, { onclick: `nav('${page}')` })).join("")}
     </div>
   </div>`;
 }

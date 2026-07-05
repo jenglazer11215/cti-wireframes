@@ -113,34 +113,64 @@ function renderHome() {
   </div>`;
 }
 
-function renderEngageAbout() {
-  return `<div class="max-w-6xl mx-auto px-6 py-12">
-    <h1 class="text-4xl font-semibold text-gray-900 mb-4 max-w-3xl leading-tight">Who We Are</h1>
-    <p class="text-lg text-gray-600 max-w-2xl mb-3 leading-relaxed">
-      Coqual helps organizations navigate complexity, strengthen leadership, build trust, and design better work futures.
-    </p>
-    <p class="text-sm text-gray-600 mb-10">
-      Coqual is a global think tank that helps companies redesign how they work and lead.
-    </p>
+function renderEngageAboutCTI() {
+  return `<div>
+    <section class="border-b border-gray-300 bg-white px-6 py-16">
+      <div class="max-w-6xl mx-auto">
+        ${Lbl("About CTI")}
+        <h1 class="text-5xl font-semibold text-gray-900 mt-4 mb-4 leading-tight max-w-3xl">Who We Are</h1>
+        <p class="text-lg text-gray-600 max-w-2xl leading-relaxed">
+          CTI helps organizations navigate complexity, strengthen leadership, build trust, and design better work futures.
+        </p>
+      </div>
+    </section>
 
-    <h2 class="font-semibold text-gray-900 mb-6 text-xl">Team &amp; Fellows</h2>
-    <div class="grid grid-cols-4 gap-6 mb-16">
-      ${TEAM_AND_FELLOWS.map(({ name, title }) => `
-        <div class="flex flex-col items-center text-center">
-          ${GrayBox({ w: "w-full", h: "h-36", label: "Photo" })}
-          <p class="font-medium text-gray-900 text-sm mt-3">${esc(name)}</p>
-          <p class="text-xs text-gray-500 mt-1 leading-snug whitespace-pre-line">${esc(title)}</p>
-        </div>`).join("")}
-    </div>
+    <div class="max-w-6xl mx-auto px-6 py-12">
+      <section class="mb-16 max-w-2xl">
+        <h2 class="font-semibold text-gray-900 mb-3 text-xl">About CTI</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          CTI is a global think tank that helps companies redesign how they work and lead.
+        </p>
+      </section>
 
-    <h2 class="font-semibold text-gray-900 mb-6 text-xl">Board of Directors</h2>
-    <div class="grid grid-cols-4 gap-6">
-      ${BOARD.map(({ name, title }) => `
-        <div class="flex flex-col items-center text-center">
-          ${GrayBox({ w: "w-full", h: "h-36", label: "Photo" })}
-          <p class="font-medium text-gray-900 text-sm mt-3">${esc(name)}</p>
-          <p class="text-xs text-gray-500 mt-1 leading-snug whitespace-pre-line">${esc(title)}</p>
-        </div>`).join("")}
+      <section class="mb-16 max-w-2xl">
+        <h2 class="font-semibold text-gray-900 mb-3 text-xl">Our Story</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          CTI is a global think tank with more than two decades of experience helping organizations navigate change and create conditions where people and ideas thrive. Our work blends rigorous research with cultural insight and practical tools that help leaders turn knowledge into action. The Coqual Global Lab is our applied innovation center — designed to test, refine, and share what works in real time, supporting organizations as they design for the future of work.
+        </p>
+      </section>
+
+      <section id="leadership" class="mb-16">
+        <h2 class="font-semibold text-gray-900 mb-6 text-xl">Leadership</h2>
+        <div class="grid grid-cols-4 gap-6">
+          ${TEAM_AND_FELLOWS.map(({ name, title }) => `
+            <div class="flex flex-col items-center text-center">
+              ${GrayBox({ w: "w-full", h: "h-36", label: "Photo" })}
+              <p class="font-medium text-gray-900 text-sm mt-3">${esc(name)}</p>
+              <p class="text-xs text-gray-500 mt-1 leading-snug whitespace-pre-line">${esc(title)}</p>
+            </div>`).join("")}
+        </div>
+      </section>
+
+      <section id="board" class="mb-16">
+        <h2 class="font-semibold text-gray-900 mb-6 text-xl">Board of Directors</h2>
+        <div class="grid grid-cols-4 gap-6">
+          ${BOARD.map(({ name, title }) => `
+            <div class="flex flex-col items-center text-center">
+              ${GrayBox({ w: "w-full", h: "h-36", label: "Photo" })}
+              <p class="font-medium text-gray-900 text-sm mt-3">${esc(name)}</p>
+              <p class="text-xs text-gray-500 mt-1 leading-snug whitespace-pre-line">${esc(title)}</p>
+            </div>`).join("")}
+        </div>
+      </section>
+
+      <section class="bg-gray-900 text-white p-10 text-center">
+        <h2 class="text-2xl font-semibold mb-3">Be in the room.</h2>
+        <p class="text-gray-400 text-sm mb-6 max-w-xl mx-auto">Membership means a seat at the table where the work happens.</p>
+        <button onclick="navEngage('membership')" class="border border-white text-white px-6 py-3 font-mono text-xs hover:bg-white hover:text-gray-900 transition-colors">
+          Request a Membership Conversation
+        </button>
+      </section>
     </div>
   </div>`;
 }
@@ -154,7 +184,7 @@ function renderForumPublic() {
     : upcoming;
 
   return `<div>
-    ${SectionNav("The Forum", [["Overview", "forum-public"], ["Events", "forum-calendar"], ["Summit", "summit"], ["Join the Coalition", "engage:taskforce"]], "forum-public")}
+    ${SectionNav("The Forum", [["Summit", "summit"]], "forum-public")}
     <div class="max-w-6xl mx-auto px-6 py-12">
       ${Lbl("THE COALITION IS CURRENTLY WORKING ON")}
       <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-4 max-w-2xl leading-tight">
@@ -246,7 +276,7 @@ function renderForumPublic() {
 
 function renderSummit() {
   return `<div>
-    ${SectionNav("The Forum", [["Overview", "forum-public"], ["Events", "forum-calendar"], ["Summit", "summit"], ["Join the Coalition", "engage:taskforce"]], "summit")}
+    ${SectionNav("The Forum", [["Summit", "summit"]], "summit")}
     <div class="max-w-6xl mx-auto px-6 py-12">
       ${Lbl("The Forum · Annual Summit")}
       <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-2">Work Reimagined: The Summit for Organizational Leaders</h1>
@@ -291,7 +321,6 @@ function renderLabReport() {
   const seriesReports = report.series ? LAB_REPORTS.filter(r => r.series === report.series && r.title !== report.title) : [];
 
   return `<div>
-    ${SectionNav("Coqual Global Lab", [["Research", "lab"], ["Press & Speakers", "engage:advisory"], ["About the Lab", "engage:about"]], "lab")}
     <div class="max-w-6xl mx-auto px-6 py-10">
       <button onclick="nav('lab')" class="text-xs font-mono text-gray-500 hover:text-gray-900 mb-6 flex items-center gap-1">← All Research</button>
 
@@ -373,13 +402,13 @@ function renderLabReport() {
           <div class="border border-gray-300 p-4">
             <h3 class="font-semibold text-gray-900 mb-2 text-sm">Press & Permissions</h3>
             <p class="text-xs text-gray-600 leading-relaxed mb-3">For media inquiries, quote permissions, or speaker requests related to this research, contact the Coqual Global Lab.</p>
-            ${Btn("Contact the Lab", { onclick: "navEngage('advisory')" })}
+            ${Btn("Contact the Lab", { onclick: "navEngage('press')" })}
           </div>
 
           <div class="bg-gray-900 text-white p-4">
             <p class="text-sm font-medium mb-2">Bring this research to your organization.</p>
             <p class="text-xs text-gray-400 mb-3">Available for executive briefings, board presentations, leadership retreats, and company-wide sessions.</p>
-            <button onclick="navEngage('advisory')" class="text-xs font-mono border border-gray-600 text-gray-300 px-3 py-2 hover:border-white hover:text-white w-full">Book a Speaker</button>
+            <button onclick="navEngage('speaking')" class="text-xs font-mono border border-gray-600 text-gray-300 px-3 py-2 hover:border-white hover:text-white w-full">Book a Speaker</button>
           </div>
 
           ${seriesReports.length > 0 ? `
@@ -410,12 +439,11 @@ function renderLab() {
   const featured = LAB_REPORTS[0];
 
   return `<div>
-    ${SectionNav("Coqual Global Lab", [["Research", "lab"], ["Press & Speakers", "engage:advisory"], ["About the Lab", "engage:about"]], "lab")}
     <div class="max-w-6xl mx-auto px-6 py-12">
       ${Lbl("Coqual Global Lab")}
       <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-3">Research at the frontier of work, talent, and leadership.</h1>
       <p class="text-gray-600 text-sm mb-2">
-        Full reports available to CTI members. <button onclick="navEngage('advisory')" class="underline text-gray-800">Citing our research or requesting a speaker? Contact the Lab.</button>
+        Full reports available to CTI members. <button onclick="navEngage('press')" class="underline text-gray-800">Citing our research or requesting a speaker? Contact the Lab.</button>
       </p>
       <p class="text-xs text-gray-500 mb-8 font-mono">
         ${publicReports.length} reports available · Full research library available to CTI members.
@@ -498,7 +526,6 @@ function renderConsequentialArchive() {
   const topics = ["All", "AI + Work", "Talent Strategy", "Leadership + Culture", "Workforce Design", "Trust + Institutional Risk", "Organizational Performance", "Future of Work", "DEI Evolution"];
 
   return `<>
-    ${SectionNav("Consequential", [["All", "consequential-archive"], ["Blog Posts", "consequential-archive"], ["Podcast", "consequential-archive"]], "consequential-archive")}
     <div class="max-w-6xl mx-auto px-6 py-12">
       ${Lbl("Editorial")}
       <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-2">Consequential</h1>
@@ -610,19 +637,43 @@ function renderBlogPost() {
   </div>`;
 }
 
+const HIDDEN_PAGES = [
+  { label: "Sponsor Prospectus", page: "sponsor-prospectus" },
+  { label: "Media Kit", page: "media-kit" },
+  { label: "Partnership Prospectus", page: "partnership-prospectus" },
+  { label: "Executive Briefing Request", page: "executive-briefing-request" },
+];
+
+function HiddenPagesBlock() {
+  return `<div class="border-t border-gray-200 bg-gray-50 px-6 py-8 mt-4">
+    <div class="max-w-6xl mx-auto">
+      <p class="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3">Sales &amp; marketing pages (not in navigation)</p>
+      <div class="flex flex-wrap gap-3">
+        ${HIDDEN_PAGES.map(({ label, page }) => `
+          <button onclick="nav('${page}')" class="text-xs font-mono border border-gray-300 text-gray-600 px-3 py-1.5 hover:border-gray-500 hover:text-gray-900 bg-white">
+            ${esc(label)} <span class="text-gray-400">(Hidden / Direct URL)</span>
+          </button>`).join("")}
+      </div>
+    </div>
+  </div>`;
+}
+
 function renderEngage() {
   const tab = S.engage.tab;
   const items = [
-    ["Advisory", "engage:advisory"], ["Speaking", "engage:speaking"],
-    ["Task Force", "engage:taskforce"], ["About", "engage:about"],
+    ["Membership", "engage:membership"], ["Advisory", "engage:advisory"],
+    ["Speaking", "engage:speaking"], ["Press", "engage:press"],
+    ["About CTI", "engage:about"], ["Contact", "request-form"],
   ];
   const content = tab === "speaking" ? renderEngageSpeaking()
-    : tab === "taskforce" ? renderEngageTaskForce()
-    : tab === "about" ? renderEngageAbout()
+    : tab === "membership" ? renderEngageMembership()
+    : tab === "press" ? renderEngagePress()
+    : tab === "about" ? renderEngageAboutCTI()
     : renderEngageAdvisory();
   return `<div>
     ${SectionNav("Engage", items, "engage")}
     ${content}
+    ${HiddenPagesBlock()}
   </div>`;
 }
 
@@ -833,7 +884,6 @@ function renderEngageSpeaking() {
 function renderEngageAdvisory() {
   const openForm = S.engage.openForm;
   const cards = [
-    { id: "press", title: "Press", sub: "For journalists and media.", items: ["Rapid response comment", "Expert spokespeople", "Embargoed research access", "Press kit download", "Quote clearance"], cta: "Contact the Press Team" },
     { id: "advisory", title: "Decision Support / Advisory", sub: "For organizations or Co-Chairs needing thought partnership on a live challenge.", items: ["Issue framing", "Expert consultation", "Research synthesis", "Strategic guidance"], cta: "Request Decision Support" },
   ];
   return `<div class="max-w-6xl mx-auto px-6 py-12">
@@ -864,7 +914,40 @@ function renderEngageAdvisory() {
   </div>`;
 }
 
-function renderEngageTaskForce() {
+function renderEngagePress() {
+  const openForm = S.engage.openForm;
+  const cards = [
+    { id: "press", title: "Press", sub: "For journalists and media.", items: ["Rapid response comment", "Expert spokespeople", "Embargoed research access", "Press kit download", "Quote clearance"], cta: "Contact the Press Team" },
+  ];
+  return `<div class="max-w-6xl mx-auto px-6 py-12">
+    ${Lbl("Press")}
+    <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-8">For journalists and media.</h1>
+    <div class="grid grid-cols-2 gap-6 max-w-3xl">
+      ${cards.map(({ id, title, sub, items, cta }) => `
+        <div>
+          ${Card(`
+            <h2 class="font-semibold text-gray-900 mb-1">${esc(title)}</h2>
+            <p class="text-sm text-gray-500 mb-4">${esc(sub)}</p>
+            <ul class="space-y-1.5 mb-6">
+              ${items.map(item => `
+                <li class="flex items-center gap-2 text-sm text-gray-700">
+                  <div class="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></div>${esc(item)}
+                </li>`).join("")}
+            </ul>
+            <button onclick="setState('engage.openForm', ${JSON.stringify(openForm === id ? null : id)})" class="bg-gray-900 text-white px-4 py-1.5 text-xs font-mono hover:bg-gray-700 cursor-pointer inline-block">${esc(cta)}</button>
+          `)}
+          ${openForm === id ? `
+            <div class="border border-gray-300 border-t-0 bg-gray-50 p-4 space-y-3">
+              ${Lbl("Request form")}
+              ${Field("Name")}${Field("Organization")}${Field("Email")}${Field("Message", { tall: true })}
+              ${Btn("Submit", { v: "solid" })}
+            </div>` : ""}
+        </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+function renderEngageMembership() {
   const openFaq = S.engage.openFaq;
   const faqs = [
     { q: "How do I join?", a: "We begin with a conversation. There is no application form or self-service signup. Membership is extended after a conversation with a member of the CTI team." },
@@ -873,7 +956,7 @@ function renderEngageTaskForce() {
     { q: "Why isn't pricing on the website?", a: "Membership is a relationship. We have a conversation first." },
   ];
   return `<div class="max-w-6xl mx-auto px-6 py-12">
-    ${Lbl("Task Force")}
+    ${Lbl("Membership")}
     <h1 class="text-4xl font-semibold text-gray-900 mt-3 mb-4">Join the Coalition of Consequence</h1>
     <p class="text-base text-gray-600 mb-8 max-w-2xl leading-relaxed">A selective network of global leaders redesigning work, talent, and leadership. Membership means a seat in The Forum, predictive intelligence from the Coqual Global Lab, access to the Luminary Exchange, and a peer network you cannot find anywhere else.</p>
     ${Btn("Request a Membership Conversation", { onclick: "nav('request-form')", v: "solid" })}
@@ -905,11 +988,13 @@ function renderEngageTaskForce() {
 }
 
 function renderSponsorProspectus() {
-  return `<div class="max-w-4xl mx-auto px-6 py-14">
+  return `<div>
+    ${HiddenPageBanner("Sponsor Prospectus")}
+    <div class="max-w-4xl mx-auto px-6 py-14">
 
     <div class="flex items-center justify-between mb-12 pb-6 border-b border-gray-300">
       <div>
-        <p class="font-mono font-bold text-gray-900 text-sm tracking-widest">COQUAL</p>
+        <p class="font-mono font-bold text-gray-900 text-sm tracking-widest">CTI</p>
         <p class="text-xs text-gray-500 mt-0.5 font-mono">Sponsor Prospectus</p>
       </div>
       <div class="text-right">
@@ -989,7 +1074,7 @@ function renderSponsorProspectus() {
           </div>`).join("")}
       </div>
       <p class="text-sm text-gray-600 leading-relaxed italic">
-        Sponsors help shape the inquiry, contribute questions that matter to their teams, and stay closely connected as insights emerge. Lead and Project Sponsors join working sessions with Coqual researchers to interpret findings and explore new routines.
+        Sponsors help shape the inquiry, contribute questions that matter to their teams, and stay closely connected as insights emerge. Lead and Project Sponsors join working sessions with CTI researchers to interpret findings and explore new routines.
       </p>
     </section>
 
@@ -1010,7 +1095,7 @@ function renderSponsorProspectus() {
           <div class="grid grid-cols-2 gap-2">
             ${[
               "A dedicated advisory project connected to an existing performance system",
-              "Strategic sessions with Coqual researchers",
+              "Strategic sessions with CTI researchers",
               "Early influence on research framing and stakeholder questions",
               "First access to findings, tools, and insights",
               "A featured organizational case example",
@@ -1086,17 +1171,108 @@ function renderSponsorProspectus() {
     </section>
 
     <section class="border-t border-gray-200 pt-8">
-      <h3 class="font-semibold text-gray-900 mb-3 text-sm">About Coqual</h3>
+      <h3 class="font-semibold text-gray-900 mb-3 text-sm">About CTI</h3>
       <p class="text-sm text-gray-600 leading-relaxed max-w-2xl">
-        Coqual is a global think tank with more than two decades of experience helping organizations navigate change and create conditions where people and ideas thrive. Our work blends rigorous research with cultural insight and practical tools that help leaders turn knowledge into action. The Global Lab at Coqual is our applied innovation center — designed to test, refine, and share what works in real time, supporting organizations as they design for the future of work.
+        CTI is a global think tank with more than two decades of experience helping organizations navigate change and create conditions where people and ideas thrive. Our work blends rigorous research with cultural insight and practical tools that help leaders turn knowledge into action. The Global Lab at CTI is our applied innovation center — designed to test, refine, and share what works in real time, supporting organizations as they design for the future of work.
       </p>
       <div class="mt-6 flex items-center gap-6">
-        <button onclick="navEngage('advisory')" class="text-xs font-mono text-gray-600 underline hover:text-gray-900">Contact the Lab</button>
+        <button onclick="navEngage('press')" class="text-xs font-mono text-gray-600 underline hover:text-gray-900">Contact the Lab</button>
         <button onclick="nav('lab')" class="text-xs font-mono text-gray-600 underline hover:text-gray-900">View All Research</button>
         <button onclick="nav('request-form')" class="text-xs font-mono text-gray-600 underline hover:text-gray-900">Request a Conversation</button>
       </div>
     </section>
 
+  </div>
+  </div>`;
+}
+
+function HiddenPageBanner(label) {
+  return `<div class="bg-gray-100 border-b border-gray-300 px-6 py-2 text-center">
+    <span class="text-xs font-mono text-gray-500">${esc(label)} — Hidden / Direct URL page, not linked from primary navigation</span>
+  </div>`;
+}
+
+function renderMediaKit() {
+  return `<div>
+    ${HiddenPageBanner("Media Kit")}
+    <div class="max-w-4xl mx-auto px-6 py-14">
+      ${Lbl("For Press &amp; Media")}
+      <h1 class="text-4xl font-semibold text-gray-900 mt-4 mb-6 leading-tight max-w-2xl">Media Kit</h1>
+      <p class="text-base text-gray-600 leading-relaxed max-w-2xl mb-10">
+        Logos, boilerplate, executive headshots, and factsheets for press covering CTI, our research, or our leadership.
+      </p>
+      ${HR()}
+      <div class="grid grid-cols-2 gap-4 mb-10">
+        ${[
+          { t: "CTI Boilerplate &amp; Fact Sheet", d: "Approved organizational description and key statistics." },
+          { t: "Logo Package", d: "CTI logo in PNG, SVG, and EPS formats, light and dark variants." },
+          { t: "Executive Headshots", d: "High-resolution photos of CTI leadership and spokespeople." },
+          { t: "Brand Guidelines", d: "Usage rules for the CTI name, logo, and color palette." },
+        ].map(({ t, d }) => Card(`
+            ${GrayBox({ h: "h-24", label: "Asset preview" })}
+            <h3 class="font-medium text-gray-900 mt-3 mb-1 text-sm">${t}</h3>
+            <p class="text-xs text-gray-500 mb-3">${d}</p>
+            <span class="text-xs font-mono text-gray-600">↓ Download</span>
+          `)).join("")}
+      </div>
+      ${HR()}
+      <h2 class="font-semibold text-gray-900 mb-3 text-sm">Media Contact</h2>
+      <p class="text-sm text-gray-600 mb-6">For interview requests, quote approval, or additional assets, contact the CTI press team.</p>
+      ${Btn("Contact the Press Team", { onclick: "navEngage('press')", v: "solid" })}
+    </div>
+  </div>`;
+}
+
+function renderPartnershipProspectus() {
+  return `<div>
+    ${HiddenPageBanner("Partnership Prospectus")}
+    <div class="max-w-4xl mx-auto px-6 py-14">
+      ${Lbl("Corporate Partnership Opportunity")}
+      <h1 class="text-4xl font-semibold text-gray-900 mt-4 mb-6 leading-tight max-w-2xl">Partner With CTI</h1>
+      <p class="text-base text-gray-600 leading-relaxed max-w-2xl mb-10">
+        A structured overview of how organizations can partner with CTI beyond standard membership — co-branded research, Summit underwriting, and Forum session sponsorship.
+      </p>
+      ${HR()}
+      <div class="space-y-6 mb-10">
+        ${[
+          { t: "Summit Underwriting", d: "Visible presence at CTI's flagship annual convening, including a speaking role and attendee list access." },
+          { t: "Co-Branded Research", d: "Joint research initiatives with the Coqual Global Lab, tailored to a shared strategic question." },
+          { t: "Forum Session Sponsorship", d: "Sponsor a themed Forum session and shape the discussion agenda." },
+        ].map(({ t, d }) => `
+          <div class="border border-gray-300 p-6">
+            <h3 class="font-semibold text-gray-900 text-lg mb-2">${t}</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">${d}</p>
+          </div>`).join("")}
+      </div>
+      ${HR()}
+      <div class="bg-gray-900 text-white p-10 text-center">
+        <h2 class="text-2xl font-semibold mb-3">Let's shape a partnership.</h2>
+        <p class="text-gray-400 text-sm mb-6 max-w-xl mx-auto">Tell us what you're looking to accomplish and we'll follow up with a tailored proposal.</p>
+        <button onclick="nav('request-form')" class="border border-white text-white px-6 py-3 font-mono text-xs hover:bg-white hover:text-gray-900 transition-colors">
+          Start a Conversation
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderExecutiveBriefingRequest() {
+  return `<div>
+    ${HiddenPageBanner("Executive Briefing Request")}
+    <div class="max-w-2xl mx-auto px-6 py-14">
+      ${Lbl("Executive Briefings")}
+      <h1 class="text-4xl font-semibold text-gray-900 mt-4 mb-4 leading-tight">Request an Executive Briefing</h1>
+      <p class="text-base text-gray-600 leading-relaxed mb-10">
+        Research-backed briefings for CHROs, executive teams, boards, and senior HR leadership. Tell us the audience and topic and CTI will follow up to schedule.
+      </p>
+      <div class="space-y-5">
+        ${Field("Name")}${Field("Organization")}${Field("Title")}${Field("Email")}
+        ${Field("Audience (e.g. board, ELT, HR leadership)")}
+        ${Field("Topic or business challenge", { tall: true })}
+        ${Field("Preferred timing")}
+        ${Btn("Submit Request", { onclick: "nav('thank-you')", v: "solid" })}
+      </div>
+    </div>
   </div>`;
 }
 
@@ -1272,10 +1448,9 @@ function renderLuminaryExchange() {
   const filtered = activeTopic === "All" ? LUMINARIES : LUMINARIES.filter(l => l.tags.includes(activeTopic));
 
   return `<div>
-    ${SectionNav("Luminary Exchange", [["Overview", "luminary-exchange"], ["The Luminaries", "luminary-exchange"], ["Book a Speaker", "request-form"]], "luminary-exchange")}
     <section class="border-b border-gray-300">
       <div class="max-w-6xl mx-auto px-6 py-16">
-        ${Lbl("Coqual Luminary Exchange")}
+        ${Lbl("CTI Luminary Exchange")}
         <h1 class="text-5xl font-semibold text-gray-900 mt-4 mb-6 leading-tight max-w-3xl">
           Three forces are converging.
         </h1>
@@ -1302,6 +1477,10 @@ function renderLuminaryExchange() {
             <span class="text-xs text-gray-500 font-mono">people follow our Luminaries</span>
           </div>
           <span class="text-xs text-gray-500">13 Luminaries · 9 topic areas · Practitioners + scholars</span>
+        </div>
+
+        <div class="mt-8">
+          ${Btn("Learn More About Becoming a Luminary", { onclick: "nav('request-form')", v: "solid" })}
         </div>
       </div>
     </section>

@@ -4,7 +4,7 @@ const TEAM_AND_FELLOWS = [
   { name: "Jennie Glazer", title: "Chief Executive Officer" },
   { name: "Bailey Anderson", title: "Intern, The Global Lab" },
   { name: "Mia Banner", title: "Vice President, Strategic Partnerships" },
-  { name: "Jennifer Brown", title: "Founding Luminary\nCoqual Luminary Exchange" },
+  { name: "Jennifer Brown", title: "Founding Luminary\nCTI Luminary Exchange" },
   { name: "Andy Chan", title: "Senior Manager of Data & Analysis at the Global Lab" },
   { name: "Danielle Cruz", title: "Vice President of People & Experience" },
   { name: "Radhika Darbari", title: "Fellow at Coqual's Global Lab & Senior Advisor, Asia" },
@@ -31,7 +31,7 @@ const BOARD = [
   { name: "Patricia Fili-Krushel", title: "Former Chairman of the Board" },
   { name: "Trevor Gandy", title: "Global Head of I&D, AXA XL" },
   { name: "Kent A. Gardiner", title: "Partner & Former Chairman, Crowell & Moring LLP" },
-  { name: "Jennie Glazer", title: "Chief Executive Officer, Coqual" },
+  { name: "Jennie Glazer", title: "Chief Executive Officer, CTI" },
   { name: "Kellie A. McElhaney", title: "Founder & Executive Director, Center for Equity, Gender and Leadership" },
   { name: "Ellen McGirt", title: "Award-Winning Business Journalist & Community Builder" },
   { name: "Susan Reid", title: "Global Head of Talent, Morgan Stanley" },
@@ -73,7 +73,7 @@ const FORUM_EVENTS = [
     audience: "Employees, managers, sponsors, ERG/BRG leaders, emerging leaders",
     description: "Broad internal session for International Women's Day / Women's History Month focused on sponsorship, advocacy, and advancement. Designed for company-wide deployment.",
     pillar: "The Forum / CTILearning",
-    speakers: [{ name: "Jennifer Brown", role: "Founding Luminary, Coqual" }, { name: "CTI Forum Facilitator", role: "Session Lead, TBD" }],
+    speakers: [{ name: "Jennifer Brown", role: "Founding Luminary, CTI" }, { name: "CTI Forum Facilitator", role: "Session Lead, TBD" }],
   },
   {
     id: "apr-2027", title: "The Futurist's Guide to Work Redesign",
@@ -95,7 +95,7 @@ const FORUM_EVENTS = [
     audience: "Talent, workforce innovation, early-career, learning, HR transformation",
     description: "Working session on entry-level work, pathways, early talent, and how people build experience when AI handles formative tasks. Members bring real design challenges.",
     pillar: "The Forum",
-    speakers: [{ name: "Kate Devlin, Ph.D.", role: "Luminary · King's College London" }, { name: "Coqual Lab Researcher", role: "Early Career Research Lead, TBD" }],
+    speakers: [{ name: "Kate Devlin, Ph.D.", role: "Luminary · King's College London" }, { name: "CTI Lab Researcher", role: "Early Career Research Lead, TBD" }],
   },
   {
     id: "jun-2027", title: "Belonging, Employee Communities, and the Work of Connection",
@@ -139,7 +139,7 @@ const FORUM_EVENTS = [
     audience: "Talent leaders, leadership development, managers, HR transformation",
     description: "Help talent leaders build capability that shows up in decisions, not just competency models. New Global Lab findings on convergent leadership and practical scaling frameworks.",
     pillar: "Coqual Global Lab / CTILearning",
-    speakers: [{ name: "Tomas Chamorro-Premuzic, Ph.D.", role: "Luminary · Russell Reynolds Associates" }, { name: "Coqual Lab Researcher", role: "Leadership Research Lead, TBD" }],
+    speakers: [{ name: "Tomas Chamorro-Premuzic, Ph.D.", role: "Luminary · Russell Reynolds Associates" }, { name: "CTI Lab Researcher", role: "Leadership Research Lead, TBD" }],
   },
   {
     id: "oct-2027", title: "Work Style, Feedback, and Neuroinclusive Performance",
@@ -150,7 +150,7 @@ const FORUM_EVENTS = [
     audience: "Employees, managers, talent, performance, learning, HR",
     description: "Broad internal session for Disability Employment Awareness Month focused on managers, feedback, and work style. Designed for company-wide deployment in October.",
     pillar: "The Forum / Coqual Global Lab",
-    speakers: [{ name: "Coqual Lab Researcher", role: "Neuroinclusion Research, TBD" }, { name: "CTI Forum Facilitator", role: "Session Lead, TBD" }],
+    speakers: [{ name: "CTI Lab Researcher", role: "Neuroinclusion Research, TBD" }, { name: "CTI Forum Facilitator", role: "Session Lead, TBD" }],
   },
   {
     id: "nov-2027", title: "What Should the Business Own?",
@@ -164,15 +164,15 @@ const FORUM_EVENTS = [
     speakers: [{ name: "Alison Taylor", role: "Luminary · NYU Stern School of Business" }, { name: "CTI Forum Facilitator", role: "Session Lead, TBD" }],
   },
   {
-    id: "dec-2027", title: "Coqual Summit",
+    id: "dec-2027", title: "CTI Summit",
     format: "Flagship Convening",
     month: "DEC", day: "2", date: "Dec 2, 2027",
     timeNYC: "11:00 AM ET", timeLondon: "4:00 PM GMT", timeGermany: "5:00 PM CET", timeMumbai: "9:30 PM IST",
     location: "New York City + Virtual", tag: "Summit", access: "Premium + Co-Chair", membersOnly: true, past: false,
     audience: "Members, senior leaders, researchers, Luminaries, member organizations",
     description: "Bring the coalition together around the year's biggest questions. Flagship annual convening. Full agenda, Luminary sessions, research launches, and member networking.",
-    pillar: "The Forum / Coqual Summit",
-    speakers: [{ name: "Jennie Glazer", role: "CEO, Coqual" }, { name: "Sylvia Ann Hewlett", role: "Founder & Chair Emeritus" }, { name: "Multiple Luminaries", role: "Full speaker list TBD" }],
+    pillar: "The Forum / CTI Summit",
+    speakers: [{ name: "Jennie Glazer", role: "CEO, CTI" }, { name: "Sylvia Ann Hewlett", role: "Founder & Chair Emeritus" }, { name: "Multiple Luminaries", role: "Full speaker list TBD" }],
   },
   // ── 2027 Co-Chair Events ───────────────────────────────────────────────────
   {
@@ -277,7 +277,7 @@ const LAB_REPORTS = [
 const REPORT_DETAIL = {
   "The Convergent Leader": {
     subtitle: "How the best leaders in France, Germany, and the U.K. are combining strength and humanity — and what it takes to develop them.",
-    description: "Coqual's latest research examines what distinguishes high-performing leaders across France, Germany, and the United Kingdom. The most effective leaders are not the most forceful or the most empathetic — they are the most convergent: capable of holding both at once. Drawing on surveys of more than 2,500 employees and managers, this report identifies the four dimensions of convergent leadership, the organizational conditions that enable it, and the talent management failures that prevent it from scaling.",
+    description: "CTI's latest research examines what distinguishes high-performing leaders across France, Germany, and the United Kingdom. The most effective leaders are not the most forceful or the most empathetic — they are the most convergent: capable of holding both at once. Drawing on surveys of more than 2,500 employees and managers, this report identifies the four dimensions of convergent leadership, the organizational conditions that enable it, and the talent management failures that prevent it from scaling.",
     keyFindings: [
       "87% of employees in France, Germany, and the U.K. say they have experienced a leader who was either too directive or too deferential — rarely both in the right measure at the right moment.",
       "Convergent leaders — those who combine strategic clarity with interpersonal depth — are 3.4× more likely to retain high-performing direct reports across all three markets.",
@@ -303,7 +303,7 @@ const REPORT_DETAIL = {
 
   "The Neuroinclusion Imperative": {
     subtitle: "How performance systems misread neurodivergent contribution — and what organizations must do about it.",
-    description: "Standard performance management was designed for a narrow band of cognitive styles. Coqual's research reveals how feedback structures, advancement criteria, and meeting norms systematically disadvantage neurodivergent employees — not because of individual deficits, but because of institutional design failures. This report provides a framework for organizations to audit and redesign the systems that drive performance, recognition, and advancement.",
+    description: "Standard performance management was designed for a narrow band of cognitive styles. CTI's research reveals how feedback structures, advancement criteria, and meeting norms systematically disadvantage neurodivergent employees — not because of individual deficits, but because of institutional design failures. This report provides a framework for organizations to audit and redesign the systems that drive performance, recognition, and advancement.",
     keyFindings: [
       "71% of neurodivergent employees report that their performance has been negatively evaluated for behaviors directly attributable to their neurodivergence — not their output.",
       "Neurodivergent employees are significantly more likely to receive 'communication style' feedback than neurotypical peers at the same performance level.",
@@ -377,7 +377,7 @@ const LUMINARIES = [
   {
     name: "Jennifer Brown",
     title: "Founding Luminary at the Global Lab",
-    org: "Coqual",
+    org: "CTI",
     tags: ["Leadership + Culture", "DEI Evolution"],
     provocation: "The leader you show at work is a design choice. Most people have never made it consciously.",
     problemAfterNext: "As identity becomes more visible and more contested, organizations will need leaders who can hold complexity without collapsing it — and most leadership development pipelines are not building that capacity.",

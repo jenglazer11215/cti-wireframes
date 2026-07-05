@@ -11,13 +11,14 @@ const S = {
   forumPublic: { filter: "All" },
   lab: { series: "All", tag: "All" },
   consequentialArchive: { type: "All", topic: "All" },
-  engage: { tab: "advisory", openFaq: null, openForm: null, selectedNeeds: [] },
+  engage: { tab: "membership", openFaq: null, openForm: null, selectedNeeds: [] },
   advisoryMember: { openForm: null },
   playbooks: { theme: "All" },
   forumCalendar: { view: "list", access: "All", theme: "All" },
   pastEventDetail: { tab: "synthesis" },
   eventDetailMember: { registered: false },
   luminaryExchange: { topic: "All" },
+  ui: { searchOpen: false, needHelpOpen: false },
 };
 
 function esc(str) {
@@ -179,12 +180,57 @@ function FooterCTA() {
 
 // ── Navigation ────────────────────────────────────────────────────────────────
 
+function toggleSearchOpen() {
+  S.ui.searchOpen = !S.ui.searchOpen;
+  S.ui.needHelpOpen = false;
+  render();
+}
+
+function toggleNeedHelpOpen() {
+  S.ui.needHelpOpen = !S.ui.needHelpOpen;
+  S.ui.searchOpen = false;
+  render();
+}
+
+// Full-width bar rendered directly under the primary nav — matches the site's
+// existing pattern of stacked utility bars (breadcrumb strip, section nav,
+// anchor nav) rather than a floating dropdown, so no new CSS positioning is
+// needed. Search has no real query logic yet — placeholder input only.
+function SearchBar(dark) {
+  if (!S.ui.searchOpen) return "";
+  const barClass = dark ? "bg-gray-800 border-b border-gray-700" : "bg-gray-50 border-b border-gray-200";
+  const inputClass = dark ? "bg-gray-900 border-gray-600 text-white placeholder-gray-500" : "bg-white border-gray-300 text-gray-900";
+  return `<div class="${barClass} px-6 py-3">
+    <div class="max-w-6xl mx-auto flex items-center gap-3">
+      <span class="text-xs font-mono ${dark ? "text-gray-400" : "text-gray-400"}">🔍</span>
+      <input type="text" placeholder="Search research, events, courses, playbooks…" class="border ${inputClass} text-sm px-3 py-1.5 flex-1" />
+      <button onclick="toggleSearchOpen()" class="text-xs font-mono ${dark ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"}">Close</button>
+    </div>
+  </div>`;
+}
+
+function NeedHelpBar() {
+  if (!S.ui.needHelpOpen) return "";
+  const items = [
+    ["Book Time", "request-form"], ["Book a Speaker", "engage:speaking"],
+    ["Request Advisory", "advisory-member"], ["Press Inquiry", "engage:press"],
+    ["Contact CTI", "request-form"], ["Website Help", "request-form"],
+  ];
+  return `<div class="bg-gray-800 border-b border-gray-700 px-6 py-3">
+    <div class="max-w-6xl mx-auto flex items-center gap-6 flex-wrap">
+      <span class="text-xs font-mono text-gray-400 flex-shrink-0">Need Help?</span>
+      ${items.map(([label, target]) => {
+        const onclick = target.startsWith("engage:") ? `navEngage('${target.slice(7)}')` : `nav('${target}')`;
+        return `<button onclick="${onclick}" class="text-xs font-mono text-gray-300 hover:text-white whitespace-nowrap">${esc(label)}</button>`;
+      }).join("")}
+    </div>
+  </div>`;
+}
+
 function PublicNav(page) {
   const items = [
-    ["Home", "home"], ["The Forum", "forum-public"],
-    ["Coqual Global Lab", "lab"], ["Consequential", "consequential-archive"],
-    ["Luminary Exchange", "luminary-exchange"],
-    ["Engage", "engage"], ["Sponsor Prospectus", "sponsor-prospectus"],
+    ["Home", "home"], ["Global Lab", "lab"], ["Luminary Exchange", "luminary-exchange"],
+    ["The Forum", "forum-public"], ["Consequential", "consequential-archive"], ["Engage", "engage"],
   ];
   return `<nav class="border-b border-gray-300 bg-white sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-6 py-3 flex items-center gap-6">
@@ -195,17 +241,22 @@ function PublicNav(page) {
             ${esc(label)}
           </button>`).join("")}
       </div>
-      <button onclick="nav('dashboard')" class="text-xs font-mono border border-gray-800 px-3 py-1.5 hover:bg-gray-100 whitespace-nowrap flex-shrink-0">
-        Member Login
-      </button>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <button onclick="toggleSearchOpen()" class="text-xs font-mono text-gray-500 hover:text-gray-900" title="Search">🔍</button>
+        <button onclick="nav('request-form')" class="text-xs font-mono text-gray-600 hover:text-gray-900 whitespace-nowrap">Book Time</button>
+        <button onclick="nav('dashboard')" class="text-xs font-mono border border-gray-800 px-3 py-1.5 hover:bg-gray-100 whitespace-nowrap">
+          Member Login
+        </button>
+      </div>
     </div>
+    ${SearchBar(false)}
   </nav>`;
 }
 
 function MemberNav(page) {
   const items = [
-    ["Dashboard", "dashboard"], ["The Forum", "forum-calendar"],
-    ["Consequential", "consequential-member"], ["Playbooks", "playbooks"], ["Coalition", "coalition"],
+    ["Home", "dashboard"], ["Global Lab", "lab"], ["Luminary Exchange", "luminary-exchange"],
+    ["The Forum", "forum-calendar"], ["Consequential", "consequential-member"], ["My Membership", "my-membership"],
   ];
   return `<nav class="border-b border-gray-700 bg-gray-900 sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-6 py-3 flex items-center gap-6">
@@ -217,9 +268,14 @@ function MemberNav(page) {
           </button>`).join("")}
       </div>
       <div class="flex items-center gap-3 flex-shrink-0">
-        <button onclick="nav('my-membership')" class="text-xs font-mono text-gray-400 hover:text-white">My Membership</button>
+        <button onclick="toggleSearchOpen()" class="text-xs font-mono text-gray-400 hover:text-white" title="Search">🔍</button>
+        <button onclick="nav('request-form')" class="text-xs font-mono text-gray-400 hover:text-white whitespace-nowrap">Book Time</button>
+        <button onclick="toggleNeedHelpOpen()" class="text-xs font-mono text-gray-400 hover:text-white whitespace-nowrap">Need Help? ▾</button>
+        <button onclick="nav('my-membership')" class="text-xs font-mono text-gray-400 hover:text-white">Profile</button>
         <button onclick="nav('home')" class="text-xs font-mono border border-gray-600 text-gray-400 px-3 py-1.5 hover:border-gray-300 hover:text-white">Log Out</button>
       </div>
     </div>
+    ${SearchBar(true)}
+    ${NeedHelpBar()}
   </nav>`;
 }
